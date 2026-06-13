@@ -1,43 +1,134 @@
 {% extends '../base.html' %}
-{% block title %}MarketPlace{% endblock title %}
+
+{% block title %}| Inicio{% endblock title %}
+
 {% block content %}
+<main class="bg-slate-100 text-gray-900">
+    <section class="bg-gradient-to-br from-slate-950 via-blue-900 to-cyan-700 text-white">
+        <div class="mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:px-6 lg:grid-cols-[1.05fr_0.95fr] lg:px-8 lg:py-20">
+            <div class="flex flex-col justify-center">
+                <p class="mb-3 w-fit rounded-md bg-cyan-300 px-3 py-2 text-sm font-bold uppercase tracking-wide text-blue-950">Proyecto universitario</p>
+                <h1 class="text-4xl font-bold leading-tight text-white sm:text-5xl">MarketPlace Continental</h1>
+                <p class="mt-5 max-w-2xl text-lg text-blue-100">
+                    Explora productos publicados por la comunidad, filtra por categorias y consulta directo por WhatsApp.
+                </p>
 
-{% include '../hero.html' %}
-{% include '../categories.html' %}
+                <form method="get" action="{% url 'home' %}" class="mt-8 flex flex-col gap-3 rounded-lg bg-white/95 p-3 shadow-xl ring-1 ring-white/30 sm:flex-row">
+                    {% if selected_category %}
+                    <input type="hidden" name="category" value="{{ selected_category }}">
+                    {% endif %}
+                    <label for="market-search" class="sr-only">Buscar productos</label>
+                    <input
+                        id="market-search"
+                        type="search"
+                        name="q"
+                        value="{{ query }}"
+                        placeholder="Buscar por producto, categoria o descripcion"
+                        class="min-h-12 flex-1 rounded-md border border-gray-300 bg-white px-4 text-gray-900 outline-none transition focus:border-cyan-500 focus:ring-2 focus:ring-cyan-100"
+                    >
+                    <button type="submit" class="min-h-12 rounded-md bg-cyan-400 px-6 font-bold text-blue-950 transition hover:bg-cyan-300">
+                        Buscar
+                    </button>
+                </form>
+            </div>
 
-<div class="max-w-2xl mx-auto  px-4 sm:py-6 mb-10 sm:px-6 lg:max-w-7xl lg:px-8">
-    <h1 class="text-center mt-24 mb-8 text-4xl font-medium  ">Products List</h1>
-    <div class=" mx-auto w-1/12 ">
-        <div class="mx-auto w-1/4 border-b-4 border-gray-900"></div>
-    </div>
-
-    <div class="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
-
-        {% for product in products %}
-        <div class="group relative">
-            <a href="{% url 'ecommerce:product-detail' product.pk %}">
-                {% include "ecommerce/images.html" %}
-            </a>
-
-            <div class="mt-4 flex justify-center items-center flex-col">
-                <div>
-                    <h3 class="text-md text-gray-700 flex justify-between">
-                        <a href="{% url 'ecommerce:product-detail' product.pk %}"><span aria-hidden="true"
-                                ></span>{{product.title}}</a>
-                    </h3>
+            <div class="grid content-end gap-4 sm:grid-cols-2">
+                <div class="rounded-lg bg-white/15 p-6 text-white shadow-sm ring-1 ring-white/20">
+                    <p class="text-4xl font-bold">{{ products|length }}</p>
+                    <p class="mt-2 text-cyan-100">productos visibles</p>
                 </div>
-                <p class="mt-0 text-xl italic font-light text-red-600">${{product.price}}</p>
-                <a href="{% url 'shopping_cart:add_product' product.pk %}" class="">add to cart</a>
+                <div class="rounded-lg bg-cyan-300 p-6 text-blue-950 shadow-sm">
+                    <p class="text-4xl font-bold">{{ categories|length }}</p>
+                    <p class="mt-2 text-blue-900">categorias activas</p>
+                </div>
+                <div class="rounded-lg bg-white p-6 text-gray-900 shadow-sm sm:col-span-2">
+                    <p class="font-bold text-blue-950">Compra simple, contacto directo</p>
+                    <p class="mt-2 text-sm text-gray-600">Cada tarjeta tiene un boton para consultar el producto por WhatsApp.</p>
+                </div>
             </div>
         </div>
-        {% endfor %}
-    </div>
-</div>
+    </section>
 
+    <section class="border-y border-blue-200 bg-white">
+        <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+            <div class="flex gap-3 overflow-x-auto pb-1">
+                <a href="{% url 'home' %}{% if query %}?q={{ query|urlencode }}{% endif %}"
+                   class="whitespace-nowrap rounded-md border px-4 py-2 text-sm font-semibold {% if not selected_category %}border-blue-800 bg-blue-800 text-white{% else %}border-blue-100 bg-blue-50 text-blue-900 hover:border-cyan-500 hover:bg-cyan-50{% endif %}">
+                    Todas
+                </a>
+                {% for category in categories %}
+                <a href="{% url 'home' %}?category={{ category.slug }}{% if query %}&q={{ query|urlencode }}{% endif %}"
+                   class="whitespace-nowrap rounded-md border px-4 py-2 text-sm font-semibold {% if selected_category == category.slug %}border-blue-800 bg-blue-800 text-white{% else %}border-blue-100 bg-blue-50 text-blue-900 hover:border-cyan-500 hover:bg-cyan-50{% endif %}">
+                    {{ category.title }}
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
 
+    <section class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+        <div class="mb-8 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+                <p class="text-sm font-bold uppercase tracking-wide text-cyan-700">Catalogo</p>
+                <h2 class="text-3xl font-bold text-blue-950">Productos destacados</h2>
+            </div>
+            {% if query %}
+            <a href="{% url 'home' %}{% if selected_category %}?category={{ selected_category }}{% endif %}" class="text-sm font-semibold text-blue-700 hover:text-blue-950">
+                Limpiar busqueda
+            </a>
+            {% endif %}
+        </div>
 
+        {% if products %}
+        <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {% for product in products %}
+            <article class="overflow-hidden rounded-lg border border-blue-100 bg-white shadow-md transition hover:-translate-y-1 hover:shadow-xl">
+                {% with image=product.product_images.first %}
+                <div class="flex aspect-[4/3] items-center justify-center bg-slate-200">
+                    {% if image and image.image_location %}
+                    <img src="{{ image.image_location.url }}" alt="{{ product.title }}" class="h-full w-full object-cover">
+                    {% else %}
+                    <div class="flex h-full w-full flex-col items-center justify-center bg-gradient-to-br from-blue-100 to-cyan-100 px-6 text-center">
+                        <span class="text-5xl font-bold text-blue-300">MC</span>
+                        <span class="mt-2 text-sm font-semibold text-gray-600">Sin imagen</span>
+                    </div>
+                    {% endif %}
+                </div>
+                {% endwith %}
 
+                <div class="p-5">
+                    <div class="mb-3 flex items-start justify-between gap-3">
+                        <h3 class="text-lg font-bold leading-snug text-blue-950">{{ product.title }}</h3>
+                        <span class="rounded-md bg-cyan-100 px-2 py-1 text-xs font-bold text-blue-900">{{ product.category.title }}</span>
+                    </div>
+                    <p class="mb-4 line-clamp-2 text-sm text-gray-600">{{ product.description }}</p>
+                    <p class="mb-5 text-2xl font-bold text-blue-950">S/ {{ product.price }}</p>
+                    <a
+                        href="https://wa.me/?text=Hola,%20quiero%20consultar%20por%20{{ product.title|urlencode }}%20en%20MarketPlace%20Continental"
+                        target="_blank"
+                        rel="noopener"
+                        class="block rounded-md bg-gradient-to-r from-blue-800 to-cyan-600 px-4 py-3 text-center text-sm font-bold text-white transition hover:from-blue-950 hover:to-cyan-700"
+                    >
+                        Consultar por WhatsApp
+                    </a>
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="rounded-lg border border-dashed border-cyan-400 bg-white px-6 py-16 text-center shadow-sm">
+            <div class="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-md bg-cyan-100 text-3xl font-bold text-blue-900">
+                MC
+            </div>
+            <h3 class="text-2xl font-bold text-blue-950">Aún no hay productos disponibles</h3>
+            <p class="mx-auto mt-3 max-w-xl text-gray-600">
+                Agrega categorias, productos e imagenes desde el panel de administracion para llenar el catalogo del marketplace.
+            </p>
+            <a href="{% url 'admin:index' %}" class="mt-8 inline-flex min-h-12 items-center rounded-md bg-blue-800 px-6 font-semibold text-white transition hover:bg-blue-950">
+                Ir al admin
+            </a>
+        </div>
+        {% endif %}
+    </section>
+</main>
 {% endblock content %}
-
-<button class="w-100 mb-2 btn btn-lg rounded-4 btn-primary" type="submit">Sign up</button>
-<small class="text-muted">By clicking Sign up, you agree to the terms of use.</small>

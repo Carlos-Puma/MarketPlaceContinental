@@ -133,6 +133,10 @@ ENV/
 env.bak/
 venv.bak/
 data/
+.codex_venv/
+preview.sqlite3
+server-preview.log
+server-preview.err
 
 # Spyder project settings
 .spyderproject

@@ -7,7 +7,7 @@ from ecommerce.models import Product
 def unauthenticated_user(function):
     def wrapper_function(request, *args, **kwargs):
         if request.user.is_authenticated:
-            return redirect("ecommerce:home")
+            return redirect("home")
         else:
             return function(request, *args, **kwargs)
 

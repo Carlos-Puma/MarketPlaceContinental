@@ -1,0 +1,32 @@
+services:
+  - type: web
+    name: marketplace-continental
+    env: python
+    plan: free
+    buildCommand: pip install -r requirements.txt && python manage.py collectstatic --noinput
+    startCommand: python manage.py migrate && gunicorn config.wsgi --log-file -
+    envVars:
+      - key: DEBUG
+        value: false
+      - key: DJANGO_KEY
+        generateValue: true
+      - key: ALLOWED_HOSTS
+        value: marketplace-continental.onrender.com
+      - key: CSRF_TRUSTED_ORIGINS
+        value: https://marketplace-continental.onrender.com
+      - key: CORS_ALLOWED_ORIGINS
+        value: https://marketplace-continental.onrender.com
+      - key: STRIPE_PUBLIC_KEY
+        sync: false
+      - key: STRIPE_PRIVATE_KEY
+        sync: false
+      - key: STRIPE_WEBHOOK_KEY
+        sync: false
+      - key: DATABASE_URL
+        fromDatabase:
+          name: marketplace-continental-db
+          property: connectionString
+
+databases:
+  - name: marketplace-continental-db
+    plan: free

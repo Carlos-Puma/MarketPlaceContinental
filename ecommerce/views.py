@@ -1,3 +1,5 @@
+from django.db.models import Q
+from django.shortcuts import render
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import status
 from rest_framework.filters import OrderingFilter, SearchFilter
@@ -10,6 +12,33 @@ from ecommerce.custom_permissions import IsOwnerOrReadOnly, IsStaffOrReadOnly
 from ecommerce.filters import ProductFilter
 from ecommerce.models import Category, Product
 from ecommerce.serializers import CategorySerializer, ProductSerializer
+
+
+def home(request):
+    query = request.GET.get("q", "").strip()
+    selected_category = request.GET.get("category", "").strip()
+
+    products = Product.objects.select_related("category").prefetch_related("product_images").order_by("-id")
+    categories = Category.objects.prefetch_related("products").order_by("title")
+
+    if query:
+        products = products.filter(
+            Q(title__icontains=query) | Q(description__icontains=query) | Q(category__title__icontains=query)
+        )
+
+    if selected_category:
+        products = products.filter(category__slug=selected_category)
+
+    return render(
+        request,
+        "ecommerce/home.html",
+        {
+            "products": products,
+            "categories": categories,
+            "query": query,
+            "selected_category": selected_category,
+        },
+    )
 
 
 class APIRootView(APIView):

@@ -36,13 +36,15 @@ SECRET_KEY = env("DJANGO_KEY")
 ALLOWED_HOSTS = [
     "localhost",
     "127.0.0.1",
-    "http://127.0.0.1:8000/",
     "django-ecommerce-v1.herokuapp.com",
     "test-marketplace-django.herokuapp.com",
-]
+] + env.list("ALLOWED_HOSTS", default=[])
 
 
-CSRF_TRUSTED_ORIGINS = ["https://test-marketplace-django.herokuapp.com", "https://django-ecommerce-v1.herokuapp.com"]
+CSRF_TRUSTED_ORIGINS = [
+    "https://test-marketplace-django.herokuapp.com",
+    "https://django-ecommerce-v1.herokuapp.com",
+] + env.list("CSRF_TRUSTED_ORIGINS", default=[])
 
 
 # Application definitionds
@@ -80,7 +82,11 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-CORS_ALLOWED_ORIGINS = ["http://localhost:8000", "http://localhost:3000", "https://django-ecommerce-v1.herokuapp.com"]
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:8000",
+    "http://localhost:3000",
+    "https://django-ecommerce-v1.herokuapp.com",
+] + env.list("CORS_ALLOWED_ORIGINS", default=[])
 
 INTERNAL_IPS = ["127.0.0.1"]
 
@@ -109,7 +115,9 @@ WSGI_APPLICATION = "config.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-if DEBUG:
+if env("DATABASE_URL", default=None):
+    DATABASES = {"default": env.db()}
+elif DEBUG:
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.postgresql_psycopg2",
