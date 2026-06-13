@@ -22,10 +22,10 @@ UNICONNET_PAGES = {
         "items": [
             ("Tutorias de cursos", "Refuerzo para materias complejas, primeros ciclos y preparacion para evaluaciones."),
             ("Ingles, matematicas y programacion", "Clases personalizadas para tareas, proyectos y aprendizaje practico."),
-            ("Diseño grafico y edicion", "Piezas visuales, videos, fotografia, logotipos y contenido para trabajos o emprendimientos."),
+            ("Diseno grafico y edicion", "Piezas visuales, videos, fotografia, logotipos y contenido para trabajos o emprendimientos."),
             ("Reparacion de laptops", "Diagnostico, mantenimiento, instalacion de programas y soporte tecnico accesible."),
             ("CV y emprendimiento", "Asesoria para perfil profesional, pitch, validacion de ideas y primeros pasos comerciales."),
-            ("Chat y reputacion", "Comunicacion directa, calificaciones y reseñas para operar con confianza."),
+            ("Chat y reputacion", "Comunicacion directa, calificaciones y resenas para operar con confianza."),
         ],
     },
     "productos": {
@@ -50,7 +50,7 @@ UNICONNET_PAGES = {
             ("Alumnos avanzados", "Generan ingresos ofreciendo servicios, tutorias o recursos que ya no utilizan."),
             ("Comunidad universitaria", "Impulsa colaboracion, intercambio responsable y cultura de apoyo."),
             ("Menos desperdicio", "Promueve la reutilizacion de libros, apuntes, equipos y materiales."),
-            ("Mas confianza", "Perfiles, reseñas, reportes y comunicacion directa reducen riesgos."),
+            ("Mas confianza", "Perfiles, resenas, reportes y comunicacion directa reducen riesgos."),
             ("Mejor acceso", "Centraliza recursos y oportunidades dentro de una plataforma organizada."),
         ],
     },
@@ -156,6 +156,6 @@ class CategoryDetail(RetrieveUpdateDestroyAPIView):
     def destroy(self, request, *args, **kwargs):
         instance = self.get_object()
         if instance.products.count() > 0:
-            return Response({"error": "La colección no se puede eliminar porque tiene productos"})
+            return Response({"error": "La coleccion no se puede eliminar porque tiene productos"})
         self.perform_destroy(instance)
         return Response(status=status.HTTP_204_NO_CONTENT)

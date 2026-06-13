@@ -5,6 +5,7 @@ from . import views
 app_name = "payment"
 
 urlpatterns = [
+    path("", views.payment_test, name="home"),
     path("checkout-session/", views.create_checkout_session, name="create-checkout-session"),
     path("webhooks/stripe/", views.stripe_webhook, name="stripe-webhook"),
     path("test/", views.payment_test, name="test"),
