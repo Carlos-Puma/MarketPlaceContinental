@@ -4,8 +4,7 @@ services:
     runtime: python
     plan: free
     buildCommand: pip install -r requirements-deploy.txt && python manage.py collectstatic --noinput
-    preDeployCommand: python manage.py migrate
-    startCommand: gunicorn config.wsgi --log-file -
+    startCommand: python manage.py migrate && gunicorn config.wsgi --log-file -
     envVars:
       - key: DEBUG
         value: false
