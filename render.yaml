@@ -8,6 +8,8 @@ services:
     envVars:
       - key: DEBUG
         value: false
+      - key: PYTHON_VERSION
+        value: 3.10.13
       - key: DJANGO_KEY
         generateValue: true
       - key: ALLOWED_HOSTS

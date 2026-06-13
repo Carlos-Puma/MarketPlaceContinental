@@ -1,8 +1,8 @@
-django==4.0.2
+django==4.0.6
 django-environ==0.8.1
 django-filter==22.1
-psycopg2==2.9.3
-pillow==9.0.1
+psycopg2-binary==2.9.9
+pillow==10.4.0
 gunicorn==20.1.0
 django-storages==1.12.3
 stripe==2.68.0
@@ -11,3 +11,4 @@ djangorestframework-simplejwt==5.1.0
 drf-yasg2==1.19.4
 django-cors-headers==3.13.0
 whitenoise==6.2.0
+setuptools<81
