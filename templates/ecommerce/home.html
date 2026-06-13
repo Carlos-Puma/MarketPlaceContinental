@@ -1,131 +1,220 @@
 {% extends '../base.html' %}
 
-{% block title %}| UNICONNET{% endblock title %}
+{% block title %}| Plataforma universitaria{% endblock title %}
 
 {% block content %}
-<main class="bg-[#efe2d3] text-black">
-    <section class="border-b border-black/10 bg-[#efe2d3]">
-        <div class="mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:px-6 lg:grid-cols-[0.95fr_1.05fr] lg:px-8 lg:py-20">
+<main class="bg-[#eadfce] text-black">
+    <section class="border-b border-black/10">
+        <div class="mx-auto grid max-w-7xl gap-12 px-4 py-16 sm:px-6 lg:grid-cols-[1fr_0.9fr] lg:px-8 lg:py-24">
             <div class="flex flex-col justify-center">
-                <p class="mb-4 w-fit rounded-full border border-black/10 bg-white/60 px-4 py-2 text-xs font-black uppercase tracking-wide text-black">
-                    Continua la experiencia UNICONNET
+                <p class="mb-5 w-fit rounded-full border border-black/10 bg-white/60 px-4 py-2 text-xs font-black uppercase tracking-wide">
+                    Plataforma universitaria multiservicios
                 </p>
-                <h1 class="font-serif text-5xl font-black leading-none text-black sm:text-6xl lg:text-7xl">UNICONNET</h1>
-                <p class="mt-6 max-w-2xl text-2xl leading-snug text-[#2b211b]">
-                    Cuentanos que suenas y preparamos una estrategia con cohete incluido.
+                <h1 class="font-serif text-5xl font-black leading-none sm:text-6xl lg:text-7xl">
+                    Emprendemos conectando estudiantes
+                </h1>
+                <p class="mt-7 max-w-2xl text-xl leading-8 text-[#3b2d23]">
+                    UNICONNET conecta estudiantes de ciclos avanzados que ofrecen productos y servicios con alumnos que necesitan apoyo academico, recursos y soluciones rapidas dentro de la universidad.
                 </p>
-
-                <form method="get" action="{% url 'home' %}" class="mt-9 grid gap-4 rounded-lg border border-black/10 bg-white/70 p-4 shadow-xl sm:grid-cols-[1fr_auto]">
-                    {% if selected_category %}
-                    <input type="hidden" name="category" value="{{ selected_category }}">
-                    {% endif %}
-                    <label for="market-search" class="sr-only">Buscar en UNICONNET</label>
-                    <input
-                        id="market-search"
-                        type="search"
-                        name="q"
-                        value="{{ query }}"
-                        placeholder="Busca experiencias, recursos o servicios"
-                        class="min-h-14 rounded-md border border-black/10 bg-white px-5 text-black outline-none transition focus:border-black focus:ring-2 focus:ring-[#d8b892]"
-                    >
-                    <button type="submit" class="min-h-14 rounded-md bg-black px-8 font-bold text-white transition hover:bg-[#2b211b]">
-                        Explorar
-                    </button>
-                </form>
-
-                <div class="mt-8 grid gap-3 text-sm font-semibold text-[#3a2d25] sm:grid-cols-3">
-                    <div class="rounded-md border border-black/10 bg-white/55 p-4">{{ products|length }} recursos activos</div>
-                    <div class="rounded-md border border-black/10 bg-white/55 p-4">{{ categories|length }} categorias</div>
-                    <div class="rounded-md border border-black/10 bg-black p-4 text-white">Conexion academica</div>
+                <div class="mt-9 flex flex-col gap-3 sm:flex-row">
+                    <a href="#publicaciones" class="rounded-full bg-black px-7 py-4 text-center text-sm font-black text-white transition hover:bg-[#2a211b]">Ver publicaciones</a>
+                    <a href="#como-funciona" class="rounded-full border border-black/15 bg-white/60 px-7 py-4 text-center text-sm font-black text-black transition hover:bg-white">Como funciona</a>
                 </div>
             </div>
 
-            <div class="relative overflow-hidden rounded-lg bg-white shadow-2xl ring-1 ring-black/10">
-                <img src="/static/img/uniconnet-experience.jpeg" alt="Experiencia UNICONNET" class="h-full min-h-[420px] w-full object-cover">
-                <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 to-transparent p-6 text-white">
-                    <p class="font-serif text-2xl font-bold">Universidad, conexion y oportunidades</p>
-                    <p class="mt-2 max-w-lg text-sm text-[#efe2d3]">Una identidad sobria, academica y digital para impulsar tu comunidad.</p>
+            <div class="rounded-lg bg-white p-6 shadow-2xl ring-1 ring-black/10">
+                <img src="/static/img/logoUNICONNET.jpeg" alt="UNICONNET" class="mx-auto h-44 w-44 object-contain">
+                <div class="mt-7 border-t border-black/10 pt-7">
+                    <p class="font-serif text-3xl font-black">Una comunidad organizada, accesible y confiable.</p>
+                    <p class="mt-4 leading-7 text-[#5a493a]">
+                        Reutiliza materiales, reduce dificultades de acceso a recursos y crea oportunidades economicas para estudiantes.
+                    </p>
                 </div>
             </div>
         </div>
     </section>
 
     <section class="bg-black text-white">
-        <div class="mx-auto flex max-w-7xl gap-3 overflow-x-auto px-4 py-5 sm:px-6 lg:px-8">
-            <a href="{% url 'home' %}{% if query %}?q={{ query|urlencode }}{% endif %}"
-               class="whitespace-nowrap rounded-full border px-5 py-2 text-sm font-bold {% if not selected_category %}border-[#efe2d3] bg-[#efe2d3] text-black{% else %}border-white/20 bg-white/10 text-white hover:bg-white hover:text-black{% endif %}">
-                Todas
-            </a>
-            {% for category in categories %}
-            <a href="{% url 'home' %}?category={{ category.slug }}{% if query %}&q={{ query|urlencode }}{% endif %}"
-               class="whitespace-nowrap rounded-full border px-5 py-2 text-sm font-bold {% if selected_category == category.slug %}border-[#efe2d3] bg-[#efe2d3] text-black{% else %}border-white/20 bg-white/10 text-white hover:bg-white hover:text-black{% endif %}">
-                {{ category.title }}
-            </a>
-            {% endfor %}
+        <div class="mx-auto grid max-w-7xl gap-6 px-4 py-10 sm:grid-cols-3 sm:px-6 lg:px-8">
+            <div>
+                <p class="text-4xl font-black">{{ categories|length }}</p>
+                <p class="mt-2 text-sm text-[#eadfd4]">categorias para organizar la oferta</p>
+            </div>
+            <div>
+                <p class="text-4xl font-black">{{ products|length }}</p>
+                <p class="mt-2 text-sm text-[#eadfd4]">publicaciones iniciales disponibles</p>
+            </div>
+            <div>
+                <p class="text-4xl font-black">1 → N</p>
+                <p class="mt-2 text-sm text-[#eadfd4]">empieza en una universidad y escala a otras</p>
+            </div>
         </div>
     </section>
 
-    <section class="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
-        <div class="mb-9 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+    <section class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+        <div class="grid gap-8 lg:grid-cols-[0.8fr_1.2fr]">
             <div>
-                <p class="text-sm font-black uppercase tracking-wide text-[#6c523f]">Catalogo UNICONNET</p>
-                <h2 class="font-serif text-4xl font-black text-black">Recursos destacados</h2>
+                <p class="text-sm font-black uppercase tracking-wide text-[#6c523f]">Introduccion</p>
+                <h2 class="mt-2 font-serif text-4xl font-black">Fortalecer la conexion entre estudiantes.</h2>
             </div>
-            {% if query %}
-            <a href="{% url 'home' %}{% if selected_category %}?category={{ selected_category }}{% endif %}" class="text-sm font-bold text-black underline">
-                Limpiar busqueda
-            </a>
+            <div class="rounded-lg bg-white/70 p-7 text-lg leading-8 text-[#3b2d23] shadow-sm ring-1 ring-black/10">
+                <p>
+                    La propuesta nace ante la necesidad de reducir dificultades de acceso a recursos y oportunidades dentro del entorno universitario, promoviendo colaboracion, confianza y aprovechamiento responsable de materiales.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section id="servicios" class="bg-[#f7f1e8]">
+        <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+            <div class="mb-10 max-w-3xl">
+                <p class="text-sm font-black uppercase tracking-wide text-[#6c523f]">Servicios</p>
+                <h2 class="mt-2 font-serif text-4xl font-black">Apoyo academico y servicios especializados</h2>
+            </div>
+            <div class="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+                <div class="rounded-lg bg-white p-6 shadow-sm ring-1 ring-black/10"><h3 class="font-serif text-2xl font-black">Tutorias de cursos</h3><p class="mt-3 text-[#5b4a3d]">Apoyo entre estudiantes para materias complejas y primeros ciclos.</p></div>
+                <div class="rounded-lg bg-white p-6 shadow-sm ring-1 ring-black/10"><h3 class="font-serif text-2xl font-black">Ingles, matematicas y programacion</h3><p class="mt-3 text-[#5b4a3d]">Clases rapidas, refuerzos personalizados y acompañamiento practico.</p></div>
+                <div class="rounded-lg bg-white p-6 shadow-sm ring-1 ring-black/10"><h3 class="font-serif text-2xl font-black">Diseño y edicion</h3><p class="mt-3 text-[#5b4a3d]">Diseño grafico, edicion de videos, fotografia y creacion de logotipos.</p></div>
+                <div class="rounded-lg bg-white p-6 shadow-sm ring-1 ring-black/10"><h3 class="font-serif text-2xl font-black">Reparacion de laptops</h3><p class="mt-3 text-[#5b4a3d]">Soporte tecnico accesible dentro del ecosistema universitario.</p></div>
+                <div class="rounded-lg bg-white p-6 shadow-sm ring-1 ring-black/10"><h3 class="font-serif text-2xl font-black">CV y emprendimiento</h3><p class="mt-3 text-[#5b4a3d]">Asesoria para mejorar perfil profesional, ideas y proyectos estudiantiles.</p></div>
+                <div class="rounded-lg bg-black p-6 text-white shadow-sm"><h3 class="font-serif text-2xl font-black">Chat y reputacion</h3><p class="mt-3 text-[#eadfd4]">Comunicacion directa, calificaciones y reseñas para generar confianza.</p></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="productos" class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+        <div class="grid gap-8 lg:grid-cols-[0.9fr_1.1fr]">
+            <div>
+                <p class="text-sm font-black uppercase tracking-wide text-[#6c523f]">Productos</p>
+                <h2 class="mt-2 font-serif text-4xl font-black">Materiales y recursos reutilizados</h2>
+                <p class="mt-5 text-lg leading-8 text-[#5b4a3d]">La plataforma facilita la compra, venta o alquiler de materiales academicos y herramientas de estudio a precios accesibles.</p>
+            </div>
+            <div class="grid gap-4 sm:grid-cols-2">
+                <div class="rounded-lg border border-black/10 bg-white/70 p-5 font-bold">Libros usados y separatas</div>
+                <div class="rounded-lg border border-black/10 bg-white/70 p-5 font-bold">Calculadoras y herramientas</div>
+                <div class="rounded-lg border border-black/10 bg-white/70 p-5 font-bold">Laptops, audifonos y cargadores</div>
+                <div class="rounded-lg border border-black/10 bg-white/70 p-5 font-bold">Comida y accesorios universitarios</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="beneficios" class="bg-black text-white">
+        <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+            <p class="text-sm font-black uppercase tracking-wide text-[#d8b892]">Beneficios</p>
+            <h2 class="mt-2 font-serif text-4xl font-black">Impacto positivo dentro de la universidad</h2>
+            <div class="mt-10 grid gap-5 md:grid-cols-3">
+                <div class="rounded-lg border border-white/10 bg-white/10 p-6"><h3 class="font-serif text-2xl font-black">Alumnos nuevos</h3><p class="mt-3 text-[#eadfd4]">Reciben apoyo academico, materiales accesibles y acompañamiento de estudiantes con experiencia.</p></div>
+                <div class="rounded-lg border border-white/10 bg-white/10 p-6"><h3 class="font-serif text-2xl font-black">Alumnos avanzados</h3><p class="mt-3 text-[#eadfd4]">Generan ingresos ofreciendo tutorias, servicios o recursos que ya no utilizan.</p></div>
+                <div class="rounded-lg border border-white/10 bg-white/10 p-6"><h3 class="font-serif text-2xl font-black">Comunidad</h3><p class="mt-3 text-[#eadfd4]">Fortalece confianza, colaboracion y cultura de intercambio academico responsable.</p></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="como-funciona" class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+        <div class="mb-10 max-w-3xl">
+            <p class="text-sm font-black uppercase tracking-wide text-[#6c523f]">Como funciona</p>
+            <h2 class="mt-2 font-serif text-4xl font-black">Simple, seguro y centrado en estudiantes</h2>
+        </div>
+        <div class="grid gap-5 lg:grid-cols-4">
+            <div class="rounded-lg bg-white p-6 shadow-sm ring-1 ring-black/10"><p class="text-3xl font-black">01</p><h3 class="mt-4 font-serif text-2xl font-black">Registro</h3><p class="mt-3 text-[#5b4a3d]">Acceso con correo institucional o registro universitario.</p></div>
+            <div class="rounded-lg bg-white p-6 shadow-sm ring-1 ring-black/10"><p class="text-3xl font-black">02</p><h3 class="mt-4 font-serif text-2xl font-black">Publicacion</h3><p class="mt-3 text-[#5b4a3d]">Sube producto o servicio, imagenes, precio y descripcion.</p></div>
+            <div class="rounded-lg bg-white p-6 shadow-sm ring-1 ring-black/10"><p class="text-3xl font-black">03</p><h3 class="mt-4 font-serif text-2xl font-black">Busqueda</h3><p class="mt-3 text-[#5b4a3d]">Filtra por categoria, carrera, curso, precio o tipo de servicio.</p></div>
+            <div class="rounded-lg bg-black p-6 text-white shadow-sm"><p class="text-3xl font-black">04</p><h3 class="mt-4 font-serif text-2xl font-black">Coordinacion</h3><p class="mt-3 text-[#eadfd4]">Chat, reputacion, puntos seguros y confirmacion de entrega.</p></div>
+        </div>
+    </section>
+
+    <section class="bg-[#f7f1e8]">
+        <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+            <p class="text-sm font-black uppercase tracking-wide text-[#6c523f]">Caracteristicas</p>
+            <h2 class="mt-2 font-serif text-4xl font-black">Pagina virtual UNI-CONNECT</h2>
+            <div class="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+                <div class="rounded-lg bg-white p-6 shadow-sm ring-1 ring-black/10"><h3 class="font-serif text-xl font-black">Base tecnica y visual</h3><ul class="mt-4 space-y-2 text-sm text-[#5b4a3d]"><li>Diseño intuitivo y responsive</li><li>Correo institucional</li><li>Interfaz adaptable a celular y PC</li></ul></div>
+                <div class="rounded-lg bg-white p-6 shadow-sm ring-1 ring-black/10"><h3 class="font-serif text-xl font-black">Navegacion</h3><ul class="mt-4 space-y-2 text-sm text-[#5b4a3d]"><li>Categorias principales</li><li>Buscador inteligente</li><li>Filtros por carrera, curso y precio</li></ul></div>
+                <div class="rounded-lg bg-white p-6 shadow-sm ring-1 ring-black/10"><h3 class="font-serif text-xl font-black">Compra y entrega</h3><ul class="mt-4 space-y-2 text-sm text-[#5b4a3d]"><li>Publicacion de anuncios</li><li>Negociacion directa</li><li>Entrega dentro del campus</li></ul></div>
+                <div class="rounded-lg bg-white p-6 shadow-sm ring-1 ring-black/10"><h3 class="font-serif text-xl font-black">Seguridad</h3><ul class="mt-4 space-y-2 text-sm text-[#5b4a3d]"><li>Perfiles verificados</li><li>Reportes y moderacion</li><li>Sistema de reseñas</li></ul></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="modelo" class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+        <div class="grid gap-8 lg:grid-cols-2">
+            <div class="rounded-lg bg-black p-8 text-white">
+                <p class="text-sm font-black uppercase tracking-wide text-[#d8b892]">Modelo de ingreso</p>
+                <h2 class="mt-3 font-serif text-4xl font-black">Sostenible desde la comunidad</h2>
+                <ul class="mt-7 space-y-4 text-[#eadfd4]">
+                    <li>Comision por venta o servicio concretado.</li>
+                    <li>Publicaciones destacadas para mayor visibilidad.</li>
+                    <li>Membresias premium para vendedores frecuentes.</li>
+                </ul>
+            </div>
+            <div id="crecimiento" class="rounded-lg bg-white p-8 shadow-sm ring-1 ring-black/10">
+                <p class="text-sm font-black uppercase tracking-wide text-[#6c523f]">Escala</p>
+                <h2 class="mt-3 font-serif text-4xl font-black">De una universidad a muchas</h2>
+                <p class="mt-6 text-lg leading-8 text-[#5b4a3d]">
+                    UNICONNET empieza en una universidad, valida usuarios, necesidades y confianza. Luego replica el modelo por sedes, facultades y nuevas instituciones.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section id="publicaciones" class="bg-[#f7f1e8]">
+        <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+            <div class="mb-9 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+                <div>
+                    <p class="text-sm font-black uppercase tracking-wide text-[#6c523f]">Publicaciones destacadas</p>
+                    <h2 class="font-serif text-4xl font-black text-black">Servicios y recursos disponibles</h2>
+                </div>
+                <form method="get" action="{% url 'home' %}" class="flex min-h-12 overflow-hidden rounded-full bg-white shadow-sm ring-1 ring-black/10 lg:min-w-[420px]">
+                    <input type="search" name="q" value="{{ query }}" placeholder="Buscar tutoria, laptop, CV..." class="min-w-0 flex-1 px-5 outline-none">
+                    <button class="bg-black px-6 font-bold text-white" type="submit">Buscar</button>
+                </form>
+            </div>
+
+            <div class="mb-8 flex gap-3 overflow-x-auto pb-1">
+                <a href="{% url 'home' %}{% if query %}?q={{ query|urlencode }}{% endif %}" class="whitespace-nowrap rounded-full border px-5 py-2 text-sm font-bold {% if not selected_category %}border-black bg-black text-white{% else %}border-black/10 bg-white text-black hover:bg-black hover:text-white{% endif %}">Todas</a>
+                {% for category in categories %}
+                <a href="{% url 'home' %}?category={{ category.slug }}{% if query %}&q={{ query|urlencode }}{% endif %}" class="whitespace-nowrap rounded-full border px-5 py-2 text-sm font-bold {% if selected_category == category.slug %}border-black bg-black text-white{% else %}border-black/10 bg-white text-black hover:bg-black hover:text-white{% endif %}">{{ category.title }}</a>
+                {% endfor %}
+            </div>
+
+            {% if products %}
+            <div class="grid grid-cols-1 gap-7 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                {% for product in products %}
+                <article class="group overflow-hidden rounded-lg border border-black/10 bg-white shadow-lg transition hover:-translate-y-1 hover:shadow-2xl">
+                    {% with image=product.product_images.first %}
+                    <div class="flex aspect-[4/3] items-center justify-center bg-[#e3d2c0]">
+                        {% if image and image.image_location %}
+                        <img src="{{ image.image_location.url }}" alt="{{ product.title }}" class="h-full w-full object-cover transition duration-300 group-hover:scale-105">
+                        {% else %}
+                        <div class="flex h-full w-full flex-col items-center justify-center bg-[#eadfce] px-6 text-center">
+                            <img src="/static/img/logoUNICONNET.jpeg" alt="" class="mb-3 h-20 w-20 object-contain">
+                            <span class="text-sm font-bold text-[#6c523f]">UNICONNET</span>
+                        </div>
+                        {% endif %}
+                    </div>
+                    {% endwith %}
+
+                    <div class="p-5">
+                        <div class="mb-3 flex items-start justify-between gap-3">
+                            <h3 class="font-serif text-xl font-black leading-tight text-black">{{ product.title }}</h3>
+                            <span class="rounded-full bg-[#eadfce] px-3 py-1 text-xs font-black text-black">{{ product.category.title }}</span>
+                        </div>
+                        <p class="mb-4 line-clamp-2 text-sm leading-6 text-[#5b4a3d]">{{ product.description }}</p>
+                        <p class="mb-5 text-2xl font-black text-black">S/ {{ product.price }}</p>
+                        <a href="https://wa.me/?text=Hola,%20quiero%20consultar%20por%20{{ product.title|urlencode }}%20en%20UNICONNET" target="_blank" rel="noopener" class="block rounded-full bg-black px-4 py-3 text-center text-sm font-bold text-white transition hover:bg-[#2b211b]">Consultar</a>
+                    </div>
+                </article>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="rounded-lg border border-dashed border-black/30 bg-white/70 px-6 py-16 text-center shadow-sm">
+                <img src="/static/img/logoUNICONNET.jpeg" alt="UNICONNET" class="mx-auto mb-6 h-24 w-24 object-contain">
+                <h3 class="font-serif text-3xl font-black text-black">Aun no hay publicaciones disponibles</h3>
+                <p class="mx-auto mt-3 max-w-xl text-[#5b4a3d]">Agrega servicios, productos e imagenes desde el panel de administracion para llenar la experiencia UNICONNET.</p>
+                <a href="{% url 'admin:index' %}" class="mt-8 inline-flex min-h-12 items-center rounded-full bg-black px-7 font-bold text-white transition hover:bg-[#2b211b]">Ir al admin</a>
+            </div>
             {% endif %}
         </div>
-
-        {% if products %}
-        <div class="grid grid-cols-1 gap-7 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {% for product in products %}
-            <article class="group overflow-hidden rounded-lg border border-black/10 bg-white shadow-lg transition hover:-translate-y-1 hover:shadow-2xl">
-                {% with image=product.product_images.first %}
-                <div class="flex aspect-[4/3] items-center justify-center bg-[#e3d2c0]">
-                    {% if image and image.image_location %}
-                    <img src="{{ image.image_location.url }}" alt="{{ product.title }}" class="h-full w-full object-cover transition duration-300 group-hover:scale-105">
-                    {% else %}
-                    <div class="flex h-full w-full flex-col items-center justify-center bg-[#efe2d3] px-6 text-center">
-                        <img src="/static/img/logoUNICONNET.jpeg" alt="" class="mb-3 h-20 w-20 object-contain">
-                        <span class="text-sm font-bold text-[#6c523f]">UNICONNET</span>
-                    </div>
-                    {% endif %}
-                </div>
-                {% endwith %}
-
-                <div class="p-5">
-                    <div class="mb-3 flex items-start justify-between gap-3">
-                        <h3 class="font-serif text-xl font-black leading-tight text-black">{{ product.title }}</h3>
-                        <span class="rounded-full bg-[#efe2d3] px-3 py-1 text-xs font-black text-black">{{ product.category.title }}</span>
-                    </div>
-                    <p class="mb-4 line-clamp-2 text-sm leading-6 text-[#5b4a3d]">{{ product.description }}</p>
-                    <p class="mb-5 text-2xl font-black text-black">S/ {{ product.price }}</p>
-                    <a
-                        href="https://wa.me/?text=Hola,%20quiero%20consultar%20por%20{{ product.title|urlencode }}%20en%20UNICONNET"
-                        target="_blank"
-                        rel="noopener"
-                        class="block rounded-full bg-black px-4 py-3 text-center text-sm font-bold text-white transition hover:bg-[#2b211b]"
-                    >
-                        Consultar por WhatsApp
-                    </a>
-                </div>
-            </article>
-            {% endfor %}
-        </div>
-        {% else %}
-        <div class="rounded-lg border border-dashed border-black/30 bg-white/70 px-6 py-16 text-center shadow-sm">
-            <img src="/static/img/logoUNICONNET.jpeg" alt="UNICONNET" class="mx-auto mb-6 h-24 w-24 object-contain">
-            <h3 class="font-serif text-3xl font-black text-black">Aún no hay recursos disponibles</h3>
-            <p class="mx-auto mt-3 max-w-xl text-[#5b4a3d]">
-                Agrega categorias, productos e imagenes desde el panel de administracion para llenar la experiencia UNICONNET.
-            </p>
-            <a href="{% url 'admin:index' %}" class="mt-8 inline-flex min-h-12 items-center rounded-full bg-black px-7 font-bold text-white transition hover:bg-[#2b211b]">
-                Ir al admin
-            </a>
-        </div>
-        {% endif %}
     </section>
 </main>
 {% endblock content %}

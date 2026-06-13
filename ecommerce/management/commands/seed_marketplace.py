@@ -12,53 +12,41 @@ from ecommerce.models import Category, Image, Product
 
 
 CATALOG = [
-    ("Tecnologia", "#111111", [
-        ("Audifonos Bluetooth Continental", "Audifonos inalambricos con estuche compacto y sonido nitido.", 129, 18),
-        ("Mouse ergonomico inalambrico", "Mouse recargable para clases, oficina y gaming casual.", 75, 25),
-        ("Teclado mecanico compacto", "Teclado 65% con iluminacion suave y switches tactiles.", 169, 10),
-        ("Power bank 20000 mAh", "Bateria portatil de alta capacidad para jornadas largas.", 119, 14),
-        ("Soporte para laptop aluminio", "Base plegable para estudiar con mejor postura.", 95, 12),
-        ("Parlante Bluetooth mini", "Parlante portatil con graves solidos y diseno minimalista.", 89, 20),
+    ("Tutorias y clases", "#111111", [
+        ("Tutoria de calculo I", "Refuerzo para limites, derivadas e integrales con estudiante de ciclos avanzados.", 35, 12),
+        ("Clase de programacion Python", "Acompañamiento practico para tareas, proyectos y fundamentos de programacion.", 45, 10),
+        ("Asesoria de matematica basica", "Sesiones para estudiantes de primeros ciclos que necesitan nivelacion.", 30, 15),
+        ("Clase de ingles conversacional", "Practica guiada para exposiciones, entrevistas y trabajos universitarios.", 40, 8),
     ]),
-    ("Moda", "#7a604c", [
-        ("Mochila universitaria azul", "Mochila resistente con compartimento para laptop.", 89, 30),
-        ("Casaca urbana gris", "Casaca ligera para uso diario con acabado moderno.", 159, 9),
-        ("Polo Continental basico", "Polo de algodon suave con corte casual universitario.", 55, 40),
-        ("Zapatillas urbanas blancas", "Zapatillas comodas para caminar por campus y ciudad.", 185, 8),
-        ("Gorra minimal azul", "Gorra ajustable con estilo limpio y combinable.", 58, 22),
-        ("Bolso tote canvas", "Bolso reutilizable para libros, laptop y compras pequenas.", 65, 16),
+    ("Servicios creativos", "#6f5744", [
+        ("Diseno grafico para exposiciones", "Diapositivas, afiches y piezas visuales con estilo profesional.", 55, 9),
+        ("Edicion de video academico", "Edicion de videos para proyectos, sustentaciones y redes estudiantiles.", 70, 7),
+        ("Creacion de logotipo", "Identidad visual para emprendimientos universitarios y proyectos de clase.", 85, 6),
+        ("Fotografia para perfil profesional", "Sesion rapida para CV, LinkedIn o portafolio.", 60, 5),
     ]),
-    ("Libros y Papeleria", "#3a2d25", [
-        ("Cuaderno premium A5", "Cuaderno de tapa dura con hojas punteadas.", 55, 35),
-        ("Pack lapiceros gel", "Set de lapiceros de escritura suave en colores variados.", 52, 28),
-        ("Planner academico 2026", "Agenda semanal para organizar entregas, cursos y examenes.", 70, 18),
-        ("Libro emprendimiento universitario", "Guia practica para validar ideas y lanzar proyectos.", 80, 11),
-        ("Archivador ejecutivo gris", "Archivador resistente para documentos y separadores.", 60, 19),
-        ("Set resaltadores pastel", "Marcadores de tonos suaves para apuntes limpios.", 50, 32),
+    ("Soporte tecnologico", "#2a211b", [
+        ("Revision de laptop", "Diagnostico de rendimiento, limpieza de software y recomendaciones de mejora.", 50, 10),
+        ("Instalacion de programas", "Apoyo para instalar herramientas academicas, IDEs y software de clase.", 35, 14),
+        ("Formateo y respaldo basico", "Servicio coordinado con copia de archivos y reinstalacion limpia.", 90, 5),
+        ("Mantenimiento preventivo", "Limpieza y optimizacion para equipos de uso universitario.", 75, 8),
     ]),
-    ("Hogar", "#9a7b5f", [
-        ("Lampara de escritorio LED", "Lampara regulable con luz fria, calida y neutra.", 75, 17),
-        ("Taza termica Continental", "Taza con tapa para cafe, infusiones o bebidas frias.", 62, 24),
-        ("Organizador de escritorio", "Base modular para lapices, notas y accesorios.", 68, 15),
-        ("Difusor aromatico USB", "Difusor compacto para escritorio o habitacion.", 92, 12),
-        ("Botella deportiva acero", "Botella reutilizable con aislamiento termico.", 85, 20),
-        ("Mini ventilador recargable", "Ventilador portatil con base para escritorio.", 78, 13),
+    ("CV y emprendimiento", "#9a7b5f", [
+        ("Revision de CV universitario", "Mejora de estructura, redaccion y presentacion para practicas.", 45, 12),
+        ("Perfil LinkedIn inicial", "Configuracion de perfil profesional y recomendaciones de visibilidad.", 55, 10),
+        ("Asesoria de emprendimiento", "Validacion de idea, propuesta de valor y primeros pasos comerciales.", 65, 8),
+        ("Pitch para proyecto", "Guion y estructura para presentar una idea de negocio o investigacion.", 60, 7),
     ]),
-    ("Deportes", "#5f4b3c", [
-        ("Tomatodo deportivo 1L", "Botella resistente con medidor y tapa segura.", 58, 26),
-        ("Mat de yoga antideslizante", "Colchoneta ligera para entrenamiento y estiramiento.", 95, 10),
-        ("Liga de resistencia set", "Set de ligas para rutinas de fuerza y movilidad.", 72, 16),
-        ("Balon de futsal", "Balon resistente para partidos recreativos.", 99, 9),
-        ("Toalla deportiva microfibra", "Toalla compacta de secado rapido.", 52, 25),
-        ("Maletin deportivo gris", "Bolso amplio para gimnasio, cancha o viajes cortos.", 135, 7),
+    ("Material academico", "#3a2d25", [
+        ("Libro usado de embriologia", "Libro academico en buen estado para estudiantes de ciencias de la salud.", 80, 3),
+        ("Calculadora cientifica", "Calculadora funcional para cursos de matematica, fisica y estadistica.", 65, 4),
+        ("Apuntes digitales organizados", "Resumenes y separatas de cursos generales con estructura clara.", 25, 20),
+        ("Separatas impresas", "Material fisico de apoyo para repasar antes de examenes.", 20, 18),
     ]),
-    ("Accesorios", "#1f1f1f", [
-        ("Cable USB-C reforzado", "Cable trenzado de carga rapida y alta durabilidad.", 50, 45),
-        ("Funda laptop 15 pulgadas", "Funda acolchada con bolsillo frontal.", 69, 21),
-        ("Holder magnetico celular", "Soporte magnetico para escritorio o auto.", 57, 19),
-        ("Llavero multitool", "Accesorio compacto con herramientas de uso diario.", 54, 30),
-        ("Organizador de cables", "Set de clips y correas para escritorio ordenado.", 50, 34),
-        ("Tarjetero minimalista", "Tarjetero delgado con acabado sobrio.", 59, 18),
+    ("Productos universitarios", "#1f1f1f", [
+        ("Laptop para estudiante", "Equipo de segunda mano ideal para trabajos, clases virtuales y programacion basica.", 950, 2),
+        ("Audifonos para clases", "Audifonos funcionales para reuniones, clases y estudio en biblioteca.", 45, 6),
+        ("Cargador universal laptop", "Cargador compatible con varios modelos, previa verificacion.", 75, 4),
+        ("Snack box universitario", "Combo de comida rapida para jornadas largas de estudio.", 18, 25),
     ]),
 ]
 
@@ -122,17 +110,17 @@ class Command(BaseCommand):
         draw = ImageDraw.Draw(image)
 
         accent = color
-        navy = "#0b2545"
-        soft_gray = "#d8e0ea"
+        navy = "#111111"
+        soft_gray = "#d9c8b7"
         white = "#ffffff"
 
-        draw.rounded_rectangle((70, 70, 1130, 830), radius=44, fill=white, outline=soft_gray, width=3)
+        draw.rounded_rectangle((70, 70, 1130, 830), radius=44, fill="#eadfce", outline=soft_gray, width=3)
         draw.rounded_rectangle((70, 70, 1130, 275), radius=44, fill=accent)
         draw.rectangle((70, 180, 1130, 275), fill=accent)
 
         draw.ellipse((820, 155, 1050, 385), fill="#ffffff33")
         draw.ellipse((745, 230, 965, 450), fill="#ffffff22")
-        draw.rounded_rectangle((145, 350, 1055, 690), radius=34, fill="#eef4fb", outline="#d3deeb", width=2)
+        draw.rounded_rectangle((145, 350, 1055, 690), radius=34, fill="#ffffff", outline="#d9c8b7", width=2)
 
         try:
             title_font = ImageFont.truetype("arialbd.ttf", 54)
