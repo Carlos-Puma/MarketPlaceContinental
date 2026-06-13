@@ -1,81 +1,66 @@
 {% extends '../base.html' %}
 
-{% block title %}Login{% endblock title %}
+{% block title %}Registro{% endblock title %}
 
 {% block content %}
-
-<div class="flex justify-center items-center">
-	<div
-		class="flex flex-col items-center justify-center my-20  pt-16   lg:mx-48 sm:2/3 md:w-2/4 lg:1/4 h-full border rounded-3xl  ">
-		<div class="flex justify-center ">
-			<div class="flex justify-center items-center">
-				<span class="pt-1 mx-3 whitespace-nowrap text-4xl 
-				italic font-light text-red-700 hover:text-gray-900">
-					AisModa.</span>
-			</div>
+<main class="bg-[#efe2d3] px-4 py-16">
+	<section class="mx-auto grid max-w-5xl overflow-hidden rounded-lg bg-white shadow-2xl ring-1 ring-black/10 md:grid-cols-[0.9fr_1.1fr]">
+		<div class="bg-black p-10 text-white">
+			<img src="/static/img/logoUNICONNET.jpeg" alt="UNICONNET" class="mb-8 h-24 w-24 rounded-md bg-white object-contain p-2">
+			<h1 class="font-serif text-4xl font-black">UNICONNET</h1>
+			<p class="mt-4 text-[#eadfd4]">Crea tu cuenta y continua la experiencia.</p>
 		</div>
-		<form id="form" method="post" action="" class="px-20 pt-12 w-full flex-col space-y-6">
-			{% csrf_token %}
-			<div class="flex flex-col ">
-				<label for="name" class="text-left text-red-800">First Name*</label>
-				{{ user_registration.first_name }}
-			</div>
 
-			<div class="flex flex-col ">
-				<label for="Last" class="text-left text-red-800">Last Name*</label>
-				{{ user_registration.last_name }}
+		<div class="p-8 sm:p-12">
+			<h2 class="font-serif text-3xl font-black text-black">Registrarse</h2>
+			<form id="form" method="post" action="" class="mt-8 space-y-5">
+				{% csrf_token %}
+				<div class="grid gap-5 sm:grid-cols-2">
+					<div class="flex flex-col">
+						<label for="name" class="mb-2 text-sm font-bold text-[#5b4a3d]">First Name</label>
+						{{ user_registration.first_name }}
+					</div>
+					<div class="flex flex-col">
+						<label for="Last" class="mb-2 text-sm font-bold text-[#5b4a3d]">Last Name</label>
+						{{ user_registration.last_name }}
+					</div>
+				</div>
 
-			</div>
-			<div class="flex flex-col ">
-				<label for="input_email" class="text-left text-red-800">Email*</label>
-				{{ user_registration.email }}
-
-			</div>
-			<div class="flex  flex-col  ">
-				<label for="password" class="text-left text-red-800">Enter password...</label>
-				{{ user_registration.password1 }}
-
-			</div>
-			<div class="flex  flex-col  ">
-				<label for="password" class="text-left text-red-800">Re-enter Password...</label>
-				{{ user_registration.password2 }}
+				<div class="flex flex-col">
+					<label for="input_email" class="mb-2 text-sm font-bold text-[#5b4a3d]">Email</label>
+					{{ user_registration.email }}
+				</div>
+				<div class="flex flex-col">
+					<label for="password" class="mb-2 text-sm font-bold text-[#5b4a3d]">Password</label>
+					{{ user_registration.password1 }}
+				</div>
+				<div class="flex flex-col">
+					<label for="password" class="mb-2 text-sm font-bold text-[#5b4a3d]">Confirm Password</label>
+					{{ user_registration.password2 }}
+				</div>
 
 				{% if user_registration.errors %}
-
-				<div class="text-center text-red-700 mt-4">
-
+				<div class="rounded-md bg-red-50 p-3 text-center text-sm font-semibold text-red-700">
 					{{ user_registration.errors }}
 				</div>
 				{% endif %}
 
-			</div>
-			<div class="mt-16 pt-16 flex justify-center">
-				<input type="submit" class="w-full  w-2/3 px-20 py-3 border border-red-500" value="Register">
-			</div>
+				<input type="submit" class="min-h-12 w-full rounded-full bg-black px-6 font-bold text-white transition hover:bg-[#2b211b]" value="Register">
+			</form>
 
-
-
-		</form>
-		<h6 class="mb-16 mt-4"> Already have acount?<a class="text-blue-500 font-bold"
-				href="{% url 'users:login' %}">Login</a></h6>
-	</div>
-</div>
-
-
-
-
+			<p class="mt-6 text-center text-sm text-[#5b4a3d]">
+				Ya tienes cuenta?
+				<a class="font-bold text-black underline" href="{% url 'users:login' %}">Login</a>
+			</p>
+		</div>
+	</section>
+</main>
 
 <script>
-	/* Because i didnt set placeholder values in forms.py they will be set here using vanilla Javascript
-//We start indexing at one because CSRF_token is considered and input field 
-*/
-
-	//Query All input fields
-	var form_fields = document.getElementById('form')
-	for (var field in form_fields) {
-		form_fields[field].className += 'leading-none focus:outline-none border-b-2 hover:border-b-3 border-red-700'
-	}
+	var form = document.getElementById('form');
+	var fields = form.querySelectorAll('input[type="text"], input[type="email"], input[type="password"]');
+	fields.forEach(function(field) {
+		field.className += ' min-h-12 rounded-md border border-black/10 bg-[#fbf7f2] px-4 outline-none focus:border-black';
+	});
 </script>
-
-
 {% endblock content %}

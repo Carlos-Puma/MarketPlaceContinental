@@ -12,7 +12,7 @@ from ecommerce.models import Category, Image, Product
 
 
 CATALOG = [
-    ("Tecnologia", "#0f4c81", [
+    ("Tecnologia", "#111111", [
         ("Audifonos Bluetooth Continental", "Audifonos inalambricos con estuche compacto y sonido nitido.", 129, 18),
         ("Mouse ergonomico inalambrico", "Mouse recargable para clases, oficina y gaming casual.", 75, 25),
         ("Teclado mecanico compacto", "Teclado 65% con iluminacion suave y switches tactiles.", 169, 10),
@@ -20,7 +20,7 @@ CATALOG = [
         ("Soporte para laptop aluminio", "Base plegable para estudiar con mejor postura.", 95, 12),
         ("Parlante Bluetooth mini", "Parlante portatil con graves solidos y diseno minimalista.", 89, 20),
     ]),
-    ("Moda", "#1d7a8c", [
+    ("Moda", "#7a604c", [
         ("Mochila universitaria azul", "Mochila resistente con compartimento para laptop.", 89, 30),
         ("Casaca urbana gris", "Casaca ligera para uso diario con acabado moderno.", 159, 9),
         ("Polo Continental basico", "Polo de algodon suave con corte casual universitario.", 55, 40),
@@ -28,7 +28,7 @@ CATALOG = [
         ("Gorra minimal azul", "Gorra ajustable con estilo limpio y combinable.", 58, 22),
         ("Bolso tote canvas", "Bolso reutilizable para libros, laptop y compras pequenas.", 65, 16),
     ]),
-    ("Libros y Papeleria", "#4b6584", [
+    ("Libros y Papeleria", "#3a2d25", [
         ("Cuaderno premium A5", "Cuaderno de tapa dura con hojas punteadas.", 55, 35),
         ("Pack lapiceros gel", "Set de lapiceros de escritura suave en colores variados.", 52, 28),
         ("Planner academico 2026", "Agenda semanal para organizar entregas, cursos y examenes.", 70, 18),
@@ -36,7 +36,7 @@ CATALOG = [
         ("Archivador ejecutivo gris", "Archivador resistente para documentos y separadores.", 60, 19),
         ("Set resaltadores pastel", "Marcadores de tonos suaves para apuntes limpios.", 50, 32),
     ]),
-    ("Hogar", "#5c6f82", [
+    ("Hogar", "#9a7b5f", [
         ("Lampara de escritorio LED", "Lampara regulable con luz fria, calida y neutra.", 75, 17),
         ("Taza termica Continental", "Taza con tapa para cafe, infusiones o bebidas frias.", 62, 24),
         ("Organizador de escritorio", "Base modular para lapices, notas y accesorios.", 68, 15),
@@ -44,7 +44,7 @@ CATALOG = [
         ("Botella deportiva acero", "Botella reutilizable con aislamiento termico.", 85, 20),
         ("Mini ventilador recargable", "Ventilador portatil con base para escritorio.", 78, 13),
     ]),
-    ("Deportes", "#2f80ed", [
+    ("Deportes", "#5f4b3c", [
         ("Tomatodo deportivo 1L", "Botella resistente con medidor y tapa segura.", 58, 26),
         ("Mat de yoga antideslizante", "Colchoneta ligera para entrenamiento y estiramiento.", 95, 10),
         ("Liga de resistencia set", "Set de ligas para rutinas de fuerza y movilidad.", 72, 16),
@@ -52,7 +52,7 @@ CATALOG = [
         ("Toalla deportiva microfibra", "Toalla compacta de secado rapido.", 52, 25),
         ("Maletin deportivo gris", "Bolso amplio para gimnasio, cancha o viajes cortos.", 135, 7),
     ]),
-    ("Accesorios", "#6c7a89", [
+    ("Accesorios", "#1f1f1f", [
         ("Cable USB-C reforzado", "Cable trenzado de carga rapida y alta durabilidad.", 50, 45),
         ("Funda laptop 15 pulgadas", "Funda acolchada con bolsillo frontal.", 69, 21),
         ("Holder magnetico celular", "Soporte magnetico para escritorio o auto.", 57, 19),
@@ -64,7 +64,7 @@ CATALOG = [
 
 
 class Command(BaseCommand):
-    help = "Carga categorias, productos e imagenes demo para MarketPlace Continental."
+    help = "Carga categorias, productos e imagenes demo para UNICONNET."
 
     def add_arguments(self, parser):
         parser.add_argument(
@@ -145,7 +145,7 @@ class Command(BaseCommand):
             price_font = ImageFont.load_default()
             brand_font = ImageFont.load_default()
 
-        draw.text((130, 115), "MarketPlace Continental", fill=white, font=brand_font)
+        draw.text((130, 115), "UNICONNET", fill=white, font=brand_font)
         draw.rounded_rectangle((130, 215, 420, 260), radius=18, fill="#ffffff")
         draw.text((155, 224), category.upper(), fill=accent, font=category_font)
 

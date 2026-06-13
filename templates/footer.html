@@ -1,47 +1,45 @@
-<footer class="bg-slate-950 text-white">
-  <div class="bg-gradient-to-r from-slate-950 via-blue-950 to-blue-800">
-    <div class="mx-auto grid max-w-7xl gap-10 px-4 py-12 sm:px-6 md:grid-cols-[1.2fr_0.8fr_0.8fr_1fr] lg:px-8">
-      <div>
-        <div class="mb-4 flex items-center gap-3">
-          <span class="flex h-12 w-12 items-center justify-center rounded-md bg-cyan-300 text-lg font-black text-blue-950">MC</span>
-          <span class="text-2xl font-bold">MarketPlace Continental</span>
-        </div>
-        <p class="max-w-sm text-sm leading-6 text-blue-100">
-          Marketplace universitario para mostrar productos, consultar por WhatsApp y probar una experiencia ecommerce moderna.
-        </p>
+<footer class="bg-black text-white">
+  <div class="mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:px-6 md:grid-cols-[1.2fr_0.8fr_0.8fr_1fr] lg:px-8">
+    <div>
+      <div class="mb-5 flex items-center gap-3">
+        <span class="flex h-14 w-14 items-center justify-center overflow-hidden rounded-md bg-white">
+          <img src="/static/img/logoUNICONNET.jpeg" alt="UNICONNET" class="h-full w-full object-contain">
+        </span>
+        <span class="font-serif text-3xl font-black">UNICONNET</span>
       </div>
+      <p class="max-w-sm text-sm leading-6 text-[#e8d8c8]">
+        Continuamos la experiencia universitaria conectando ideas, personas, recursos y oportunidades en un solo espacio.
+      </p>
+    </div>
 
-      <div>
-        <h3 class="mb-4 text-sm font-bold uppercase text-cyan-200">Explorar</h3>
-        <ul class="space-y-3 text-sm text-blue-100">
-          <li><a href="{% url 'home' %}" class="hover:text-white">Inicio</a></li>
-          <li><a href="{% url 'admin:index' %}" class="hover:text-white">Admin</a></li>
-          <li><a href="{% url 'shopping_cart:home' %}" class="hover:text-white">Carrito</a></li>
-        </ul>
-      </div>
+    <div>
+      <h3 class="mb-4 text-sm font-bold uppercase text-[#d8b892]">Explorar</h3>
+        <ul class="space-y-3 text-sm text-[#eadfd4]">
+        <li><a href="{% url 'home' %}" class="hover:text-white">Inicio</a></li>
+        <li><a href="{% url 'admin:index' %}" class="hover:text-white">Admin</a></li>
+        <li><a href="{% url 'shopping_cart:home' %}" class="hover:text-white">Carrito</a></li>
+      </ul>
+    </div>
 
-      <div>
-        <h3 class="mb-4 text-sm font-bold uppercase text-cyan-200">Proyecto</h3>
-        <ul class="space-y-3 text-sm text-blue-100">
-          <li>Universidad Continental</li>
-          <li>Catalogo demo</li>
-          <li>Consulta directa</li>
-        </ul>
-      </div>
+    <div>
+      <h3 class="mb-4 text-sm font-bold uppercase text-[#d8b892]">Experiencia</h3>
+      <ul class="space-y-3 text-sm text-[#eadfd4]">
+        <li>Networking academico</li>
+        <li>Recursos universitarios</li>
+        <li>Consulta directa</li>
+      </ul>
+    </div>
 
-      <div class="rounded-lg bg-white/10 p-5 ring-1 ring-white/15">
-        <h3 class="text-lg font-bold text-white">Vende en el marketplace</h3>
-        <p class="mt-2 text-sm text-blue-100">Publica productos, organiza categorias y muestra imagenes desde el panel de administracion.</p>
-        {% if request.user.is_authenticated and not request.user.seller %}
-        <a href="{% url 'users:seller_register' %}" class="mt-5 inline-flex rounded-md bg-cyan-300 px-4 py-2 text-sm font-bold text-blue-950 hover:bg-white">Registrarme como vendedor</a>
-        {% else %}
-        <a href="{% url 'admin:index' %}" class="mt-5 inline-flex rounded-md bg-cyan-300 px-4 py-2 text-sm font-bold text-blue-950 hover:bg-white">Gestionar catalogo</a>
-        {% endif %}
-      </div>
+    <div class="rounded-lg border border-white/15 bg-white/10 p-5">
+      <h3 class="font-serif text-xl font-bold text-white">Continua la experiencia</h3>
+      <p class="mt-2 text-sm text-[#eadfd4]">Cuentanos que suenas y preparamos una estrategia con cohete incluido.</p>
+      <a href="{% url 'admin:index' %}" class="mt-5 inline-flex rounded-full bg-[#efe2d3] px-5 py-2 text-sm font-bold text-black hover:bg-white">
+        Gestionar catalogo
+      </a>
     </div>
   </div>
 
-  <div class="border-t border-white/10 bg-slate-950 px-4 py-5 text-center text-sm text-blue-100">
-    © 2026 MarketPlace Continental. Proyecto universitario.
+  <div class="border-t border-white/10 px-4 py-5 text-center text-sm text-[#d8b892]">
+    © 2026 UNICONNET. Experiencia universitaria premium.
   </div>
 </footer>

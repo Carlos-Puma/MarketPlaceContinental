@@ -1,38 +1,38 @@
-<header class="sticky top-0 z-50 border-b border-blue-900/30 bg-slate-950 text-white shadow-lg">
-    <div class="bg-gradient-to-r from-blue-950 via-blue-800 to-cyan-700">
-        <div class="mx-auto flex max-w-7xl flex-col gap-4 px-4 py-4 sm:px-6 lg:px-8">
-            <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-                <a href="{% url 'home' %}" class="flex items-center justify-center gap-3 md:justify-start">
-                    <span class="flex h-12 w-12 items-center justify-center rounded-md bg-white text-lg font-black text-blue-800 shadow-md">MC</span>
-                    <span class="text-2xl font-bold leading-tight tracking-normal text-white md:text-3xl">MarketPlace Continental</span>
+<header class="sticky top-0 z-50 border-b border-black/10 bg-[#efe2d3]/95 text-black shadow-sm backdrop-blur">
+    <div class="mx-auto flex max-w-7xl flex-col gap-4 px-4 py-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+            <a href="{% url 'home' %}" class="flex items-center justify-center gap-3 md:justify-start">
+                <span class="flex h-14 w-14 items-center justify-center overflow-hidden rounded-md bg-white ring-1 ring-black/10">
+                    <img src="/static/img/logoUNICONNET.jpeg" alt="UNICONNET" class="h-full w-full object-contain">
+                </span>
+                <span class="font-serif text-3xl font-black tracking-normal text-black md:text-4xl">UNICONNET</span>
+            </a>
+
+            <div class="flex items-center justify-center gap-3 text-sm font-semibold md:justify-end">
+                {% if request.user.is_authenticated %}
+                <a href="{% url 'users:user_panel' %}" class="rounded-full border border-black/15 bg-white/60 px-5 py-2 text-black transition hover:bg-white">
+                    {{ request.user.first_name|default:request.user.email }}
                 </a>
-
-                <div class="flex items-center justify-center gap-3 text-sm font-semibold md:justify-end">
-                    {% if request.user.is_authenticated %}
-                    <a href="{% url 'users:user_panel' %}" class="rounded-md bg-white/10 px-4 py-2 text-white ring-1 ring-white/20 transition hover:bg-white/20">
-                        {{ request.user.first_name|default:request.user.email }}
-                    </a>
-                    <a href="{% url 'users:logout' %}" class="rounded-md bg-cyan-300 px-4 py-2 text-blue-950 transition hover:bg-white">Salir</a>
-                    {% else %}
-                    <a href="{% url 'users:login' %}" class="rounded-md bg-white/10 px-4 py-2 text-white ring-1 ring-white/20 transition hover:bg-white/20">Ingresar</a>
-                    {% endif %}
-                    <a href="{% url 'shopping_cart:home' %}" class="rounded-md bg-cyan-300 px-4 py-2 text-blue-950 transition hover:bg-white">Carrito</a>
-                </div>
+                <a href="{% url 'users:logout' %}" class="rounded-full bg-black px-5 py-2 text-white transition hover:bg-[#2a211b]">Salir</a>
+                {% else %}
+                <a href="{% url 'users:login' %}" class="rounded-full border border-black/15 bg-white/60 px-5 py-2 text-black transition hover:bg-white">Iniciar sesion</a>
+                {% endif %}
+                <a href="{% url 'shopping_cart:home' %}" class="rounded-full bg-black px-5 py-2 text-white transition hover:bg-[#2a211b]">Carrito</a>
             </div>
+        </div>
 
-            <div class="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
-                <form action="{% url 'home' %}" class="flex min-h-12 w-full overflow-hidden rounded-md bg-white shadow-md ring-1 ring-white/30 lg:max-w-xl">
-                    <input id="search" name="q" value="{{ query|default:'' }}" class="min-w-0 flex-1 px-4 text-gray-900 outline-none" type="search" placeholder="Buscar tecnologia, moda, libros...">
-                    <button class="bg-cyan-400 px-5 font-bold text-blue-950 transition hover:bg-cyan-300" type="submit">Buscar</button>
-                </form>
+        <div class="grid gap-3 lg:grid-cols-[minmax(260px,520px)_1fr] lg:items-center">
+            <form action="{% url 'home' %}" class="flex min-h-12 overflow-hidden rounded-full bg-white shadow-sm ring-1 ring-black/10">
+                <input id="search" name="q" value="{{ query|default:'' }}" class="min-w-0 flex-1 px-5 text-black outline-none" type="search" placeholder="Buscar recursos, servicios o experiencias">
+                <button class="bg-black px-6 font-bold text-white transition hover:bg-[#2a211b]" type="submit">Buscar</button>
+            </form>
 
-                <nav class="flex gap-2 overflow-x-auto pb-1 text-sm font-semibold">
-                    <a class="whitespace-nowrap rounded-md bg-white/10 px-3 py-2 text-white ring-1 ring-white/15 transition hover:bg-white hover:text-blue-900" href="{% url 'home' %}">Todo</a>
-                    {% for i in menu_categories %}
-                    <a class="whitespace-nowrap rounded-md bg-white/10 px-3 py-2 text-white ring-1 ring-white/15 transition hover:bg-white hover:text-blue-900" href="{% url 'home' %}?category={{ i.slug }}">{{ i.title }}</a>
-                    {% endfor %}
-                </nav>
-            </div>
+            <nav class="flex gap-2 overflow-x-auto pb-1 text-sm font-semibold lg:justify-end">
+                <a class="whitespace-nowrap rounded-full border border-black/10 bg-white/50 px-4 py-2 text-black transition hover:bg-black hover:text-white" href="{% url 'home' %}">Todo</a>
+                {% for i in menu_categories %}
+                <a class="whitespace-nowrap rounded-full border border-black/10 bg-white/50 px-4 py-2 text-black transition hover:bg-black hover:text-white" href="{% url 'home' %}?category={{ i.slug }}">{{ i.title }}</a>
+                {% endfor %}
+            </nav>
         </div>
     </div>
 </header>

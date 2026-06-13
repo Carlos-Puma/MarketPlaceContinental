@@ -1,96 +1,95 @@
 {% extends '../base.html' %}
 
-{% block title %}| Inicio{% endblock title %}
+{% block title %}| UNICONNET{% endblock title %}
 
 {% block content %}
-<main class="bg-slate-100 text-gray-900">
-    <section class="bg-gradient-to-br from-slate-950 via-blue-900 to-cyan-700 text-white">
-        <div class="mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:px-6 lg:grid-cols-[1.05fr_0.95fr] lg:px-8 lg:py-20">
+<main class="bg-[#efe2d3] text-black">
+    <section class="border-b border-black/10 bg-[#efe2d3]">
+        <div class="mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:px-6 lg:grid-cols-[0.95fr_1.05fr] lg:px-8 lg:py-20">
             <div class="flex flex-col justify-center">
-                <p class="mb-3 w-fit rounded-md bg-cyan-300 px-3 py-2 text-sm font-bold uppercase tracking-wide text-blue-950">Proyecto universitario</p>
-                <h1 class="text-4xl font-bold leading-tight text-white sm:text-5xl">MarketPlace Continental</h1>
-                <p class="mt-5 max-w-2xl text-lg text-blue-100">
-                    Explora productos publicados por la comunidad, filtra por categorias y consulta directo por WhatsApp.
+                <p class="mb-4 w-fit rounded-full border border-black/10 bg-white/60 px-4 py-2 text-xs font-black uppercase tracking-wide text-black">
+                    Continua la experiencia UNICONNET
+                </p>
+                <h1 class="font-serif text-5xl font-black leading-none text-black sm:text-6xl lg:text-7xl">UNICONNET</h1>
+                <p class="mt-6 max-w-2xl text-2xl leading-snug text-[#2b211b]">
+                    Cuentanos que suenas y preparamos una estrategia con cohete incluido.
                 </p>
 
-                <form method="get" action="{% url 'home' %}" class="mt-8 flex flex-col gap-3 rounded-lg bg-white/95 p-3 shadow-xl ring-1 ring-white/30 sm:flex-row">
+                <form method="get" action="{% url 'home' %}" class="mt-9 grid gap-4 rounded-lg border border-black/10 bg-white/70 p-4 shadow-xl sm:grid-cols-[1fr_auto]">
                     {% if selected_category %}
                     <input type="hidden" name="category" value="{{ selected_category }}">
                     {% endif %}
-                    <label for="market-search" class="sr-only">Buscar productos</label>
+                    <label for="market-search" class="sr-only">Buscar en UNICONNET</label>
                     <input
                         id="market-search"
                         type="search"
                         name="q"
                         value="{{ query }}"
-                        placeholder="Buscar por producto, categoria o descripcion"
-                        class="min-h-12 flex-1 rounded-md border border-gray-300 bg-white px-4 text-gray-900 outline-none transition focus:border-cyan-500 focus:ring-2 focus:ring-cyan-100"
+                        placeholder="Busca experiencias, recursos o servicios"
+                        class="min-h-14 rounded-md border border-black/10 bg-white px-5 text-black outline-none transition focus:border-black focus:ring-2 focus:ring-[#d8b892]"
                     >
-                    <button type="submit" class="min-h-12 rounded-md bg-cyan-400 px-6 font-bold text-blue-950 transition hover:bg-cyan-300">
-                        Buscar
+                    <button type="submit" class="min-h-14 rounded-md bg-black px-8 font-bold text-white transition hover:bg-[#2b211b]">
+                        Explorar
                     </button>
                 </form>
+
+                <div class="mt-8 grid gap-3 text-sm font-semibold text-[#3a2d25] sm:grid-cols-3">
+                    <div class="rounded-md border border-black/10 bg-white/55 p-4">{{ products|length }} recursos activos</div>
+                    <div class="rounded-md border border-black/10 bg-white/55 p-4">{{ categories|length }} categorias</div>
+                    <div class="rounded-md border border-black/10 bg-black p-4 text-white">Conexion academica</div>
+                </div>
             </div>
 
-            <div class="grid content-end gap-4 sm:grid-cols-2">
-                <div class="rounded-lg bg-white/15 p-6 text-white shadow-sm ring-1 ring-white/20">
-                    <p class="text-4xl font-bold">{{ products|length }}</p>
-                    <p class="mt-2 text-cyan-100">productos visibles</p>
+            <div class="relative overflow-hidden rounded-lg bg-white shadow-2xl ring-1 ring-black/10">
+                <img src="/static/img/uniconnet-experience.jpeg" alt="Experiencia UNICONNET" class="h-full min-h-[420px] w-full object-cover">
+                <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 to-transparent p-6 text-white">
+                    <p class="font-serif text-2xl font-bold">Universidad, conexion y oportunidades</p>
+                    <p class="mt-2 max-w-lg text-sm text-[#efe2d3]">Una identidad sobria, academica y digital para impulsar tu comunidad.</p>
                 </div>
-                <div class="rounded-lg bg-cyan-300 p-6 text-blue-950 shadow-sm">
-                    <p class="text-4xl font-bold">{{ categories|length }}</p>
-                    <p class="mt-2 text-blue-900">categorias activas</p>
-                </div>
-                <div class="rounded-lg bg-white p-6 text-gray-900 shadow-sm sm:col-span-2">
-                    <p class="font-bold text-blue-950">Compra simple, contacto directo</p>
-                    <p class="mt-2 text-sm text-gray-600">Cada tarjeta tiene un boton para consultar el producto por WhatsApp.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="border-y border-blue-200 bg-white">
-        <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-            <div class="flex gap-3 overflow-x-auto pb-1">
-                <a href="{% url 'home' %}{% if query %}?q={{ query|urlencode }}{% endif %}"
-                   class="whitespace-nowrap rounded-md border px-4 py-2 text-sm font-semibold {% if not selected_category %}border-blue-800 bg-blue-800 text-white{% else %}border-blue-100 bg-blue-50 text-blue-900 hover:border-cyan-500 hover:bg-cyan-50{% endif %}">
-                    Todas
-                </a>
-                {% for category in categories %}
-                <a href="{% url 'home' %}?category={{ category.slug }}{% if query %}&q={{ query|urlencode }}{% endif %}"
-                   class="whitespace-nowrap rounded-md border px-4 py-2 text-sm font-semibold {% if selected_category == category.slug %}border-blue-800 bg-blue-800 text-white{% else %}border-blue-100 bg-blue-50 text-blue-900 hover:border-cyan-500 hover:bg-cyan-50{% endif %}">
-                    {{ category.title }}
-                </a>
-                {% endfor %}
             </div>
         </div>
     </section>
 
-    <section class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-        <div class="mb-8 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+    <section class="bg-black text-white">
+        <div class="mx-auto flex max-w-7xl gap-3 overflow-x-auto px-4 py-5 sm:px-6 lg:px-8">
+            <a href="{% url 'home' %}{% if query %}?q={{ query|urlencode }}{% endif %}"
+               class="whitespace-nowrap rounded-full border px-5 py-2 text-sm font-bold {% if not selected_category %}border-[#efe2d3] bg-[#efe2d3] text-black{% else %}border-white/20 bg-white/10 text-white hover:bg-white hover:text-black{% endif %}">
+                Todas
+            </a>
+            {% for category in categories %}
+            <a href="{% url 'home' %}?category={{ category.slug }}{% if query %}&q={{ query|urlencode }}{% endif %}"
+               class="whitespace-nowrap rounded-full border px-5 py-2 text-sm font-bold {% if selected_category == category.slug %}border-[#efe2d3] bg-[#efe2d3] text-black{% else %}border-white/20 bg-white/10 text-white hover:bg-white hover:text-black{% endif %}">
+                {{ category.title }}
+            </a>
+            {% endfor %}
+        </div>
+    </section>
+
+    <section class="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
+        <div class="mb-9 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
             <div>
-                <p class="text-sm font-bold uppercase tracking-wide text-cyan-700">Catalogo</p>
-                <h2 class="text-3xl font-bold text-blue-950">Productos destacados</h2>
+                <p class="text-sm font-black uppercase tracking-wide text-[#6c523f]">Catalogo UNICONNET</p>
+                <h2 class="font-serif text-4xl font-black text-black">Recursos destacados</h2>
             </div>
             {% if query %}
-            <a href="{% url 'home' %}{% if selected_category %}?category={{ selected_category }}{% endif %}" class="text-sm font-semibold text-blue-700 hover:text-blue-950">
+            <a href="{% url 'home' %}{% if selected_category %}?category={{ selected_category }}{% endif %}" class="text-sm font-bold text-black underline">
                 Limpiar busqueda
             </a>
             {% endif %}
         </div>
 
         {% if products %}
-        <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        <div class="grid grid-cols-1 gap-7 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {% for product in products %}
-            <article class="overflow-hidden rounded-lg border border-blue-100 bg-white shadow-md transition hover:-translate-y-1 hover:shadow-xl">
+            <article class="group overflow-hidden rounded-lg border border-black/10 bg-white shadow-lg transition hover:-translate-y-1 hover:shadow-2xl">
                 {% with image=product.product_images.first %}
-                <div class="flex aspect-[4/3] items-center justify-center bg-slate-200">
+                <div class="flex aspect-[4/3] items-center justify-center bg-[#e3d2c0]">
                     {% if image and image.image_location %}
-                    <img src="{{ image.image_location.url }}" alt="{{ product.title }}" class="h-full w-full object-cover">
+                    <img src="{{ image.image_location.url }}" alt="{{ product.title }}" class="h-full w-full object-cover transition duration-300 group-hover:scale-105">
                     {% else %}
-                    <div class="flex h-full w-full flex-col items-center justify-center bg-gradient-to-br from-blue-100 to-cyan-100 px-6 text-center">
-                        <span class="text-5xl font-bold text-blue-300">MC</span>
-                        <span class="mt-2 text-sm font-semibold text-gray-600">Sin imagen</span>
+                    <div class="flex h-full w-full flex-col items-center justify-center bg-[#efe2d3] px-6 text-center">
+                        <img src="/static/img/logoUNICONNET.jpeg" alt="" class="mb-3 h-20 w-20 object-contain">
+                        <span class="text-sm font-bold text-[#6c523f]">UNICONNET</span>
                     </div>
                     {% endif %}
                 </div>
@@ -98,16 +97,16 @@
 
                 <div class="p-5">
                     <div class="mb-3 flex items-start justify-between gap-3">
-                        <h3 class="text-lg font-bold leading-snug text-blue-950">{{ product.title }}</h3>
-                        <span class="rounded-md bg-cyan-100 px-2 py-1 text-xs font-bold text-blue-900">{{ product.category.title }}</span>
+                        <h3 class="font-serif text-xl font-black leading-tight text-black">{{ product.title }}</h3>
+                        <span class="rounded-full bg-[#efe2d3] px-3 py-1 text-xs font-black text-black">{{ product.category.title }}</span>
                     </div>
-                    <p class="mb-4 line-clamp-2 text-sm text-gray-600">{{ product.description }}</p>
-                    <p class="mb-5 text-2xl font-bold text-blue-950">S/ {{ product.price }}</p>
+                    <p class="mb-4 line-clamp-2 text-sm leading-6 text-[#5b4a3d]">{{ product.description }}</p>
+                    <p class="mb-5 text-2xl font-black text-black">S/ {{ product.price }}</p>
                     <a
-                        href="https://wa.me/?text=Hola,%20quiero%20consultar%20por%20{{ product.title|urlencode }}%20en%20MarketPlace%20Continental"
+                        href="https://wa.me/?text=Hola,%20quiero%20consultar%20por%20{{ product.title|urlencode }}%20en%20UNICONNET"
                         target="_blank"
                         rel="noopener"
-                        class="block rounded-md bg-gradient-to-r from-blue-800 to-cyan-600 px-4 py-3 text-center text-sm font-bold text-white transition hover:from-blue-950 hover:to-cyan-700"
+                        class="block rounded-full bg-black px-4 py-3 text-center text-sm font-bold text-white transition hover:bg-[#2b211b]"
                     >
                         Consultar por WhatsApp
                     </a>
@@ -116,15 +115,13 @@
             {% endfor %}
         </div>
         {% else %}
-        <div class="rounded-lg border border-dashed border-cyan-400 bg-white px-6 py-16 text-center shadow-sm">
-            <div class="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-md bg-cyan-100 text-3xl font-bold text-blue-900">
-                MC
-            </div>
-            <h3 class="text-2xl font-bold text-blue-950">Aún no hay productos disponibles</h3>
-            <p class="mx-auto mt-3 max-w-xl text-gray-600">
-                Agrega categorias, productos e imagenes desde el panel de administracion para llenar el catalogo del marketplace.
+        <div class="rounded-lg border border-dashed border-black/30 bg-white/70 px-6 py-16 text-center shadow-sm">
+            <img src="/static/img/logoUNICONNET.jpeg" alt="UNICONNET" class="mx-auto mb-6 h-24 w-24 object-contain">
+            <h3 class="font-serif text-3xl font-black text-black">Aún no hay recursos disponibles</h3>
+            <p class="mx-auto mt-3 max-w-xl text-[#5b4a3d]">
+                Agrega categorias, productos e imagenes desde el panel de administracion para llenar la experiencia UNICONNET.
             </p>
-            <a href="{% url 'admin:index' %}" class="mt-8 inline-flex min-h-12 items-center rounded-md bg-blue-800 px-6 font-semibold text-white transition hover:bg-blue-950">
+            <a href="{% url 'admin:index' %}" class="mt-8 inline-flex min-h-12 items-center rounded-full bg-black px-7 font-bold text-white transition hover:bg-[#2b211b]">
                 Ir al admin
             </a>
         </div>
