@@ -1,7 +1,6 @@
-from pathlib import Path
+from io import BytesIO
 from textwrap import wrap
 
-from django.conf import settings
 from django.core.files.base import ContentFile
 from django.core.management.base import BaseCommand
 from django.utils.text import slugify
@@ -50,6 +49,16 @@ CATALOG = [
     ]),
 ]
 
+LEGACY_DEMO_CATEGORIES = [
+    "Tecnologia",
+    "Moda",
+    "Libros",
+    "Libros y Papeleria",
+    "Hogar",
+    "Deportes",
+    "Accesorios",
+]
+
 
 class Command(BaseCommand):
     help = "Carga categorias, productos e imagenes demo para UNICONNET."
@@ -63,9 +72,10 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         if options["clear_demo"]:
-            demo_titles = [item[0] for _, _, products in CATALOG for item in products]
-            Image.objects.filter(product__title__in=demo_titles).delete()
-            Product.objects.filter(title__in=demo_titles).delete()
+            demo_categories = [category_title for category_title, _, _ in CATALOG] + LEGACY_DEMO_CATEGORIES
+            Image.objects.filter(product__category__title__in=demo_categories).delete()
+            Product.objects.filter(category__title__in=demo_categories).delete()
+            Category.objects.filter(title__in=LEGACY_DEMO_CATEGORIES).delete()
 
         created_products = 0
         updated_products = 0
@@ -137,9 +147,7 @@ class Command(BaseCommand):
         draw.rounded_rectangle((130, 215, 420, 260), radius=18, fill="#ffffff")
         draw.text((155, 224), category.upper(), fill=accent, font=category_font)
 
-        icon_center = (600, 505)
-        draw.ellipse((icon_center[0] - 95, icon_center[1] - 95, icon_center[0] + 95, icon_center[1] + 95), fill=accent)
-        draw.text((icon_center[0] - 48, icon_center[1] - 38), self.initials(title), fill=white, font=price_font)
+        self.draw_matching_icon(draw, title, category, accent)
 
         y = 715
         for line in wrap(title, width=28)[:2]:
@@ -150,14 +158,97 @@ class Command(BaseCommand):
         bbox = draw.textbbox((0, 0), price_text, font=price_font)
         draw.text((1090 - (bbox[2] - bbox[0]), 720), price_text, fill=accent, font=price_font)
 
-        out_dir = Path(settings.MEDIA_ROOT) / "products" / "demo"
-        out_dir.mkdir(parents=True, exist_ok=True)
-        temp_path = out_dir / "_tmp_product.png"
-        image.save(temp_path, format="PNG")
-        data = temp_path.read_bytes()
-        temp_path.unlink(missing_ok=True)
-        return data
+        buffer = BytesIO()
+        image.save(buffer, format="PNG")
+        return buffer.getvalue()
 
     def initials(self, title):
         words = [word[0] for word in title.split() if word]
         return "".join(words[:2]).upper()
+
+    def draw_matching_icon(self, draw, title, category, accent):
+        text = f"{title} {category}".lower()
+        center_x, center_y = 600, 520
+        dark = "#111111"
+        beige = "#eadfce"
+        muted = "#7a604c"
+
+        if any(word in text for word in ["tutoria", "clase", "matematica", "programacion", "calculo", "ingles"]):
+            self.draw_board(draw, center_x, center_y, accent, dark)
+        elif any(word in text for word in ["diseno", "edicion", "fotografia", "logotipo"]):
+            self.draw_palette(draw, center_x, center_y, accent, dark)
+        elif any(word in text for word in ["laptop", "revision", "instalacion", "formateo", "mantenimiento", "cargador"]):
+            self.draw_laptop(draw, center_x, center_y, accent, dark)
+        elif any(word in text for word in ["cv", "linkedin", "emprendimiento", "pitch"]):
+            self.draw_document(draw, center_x, center_y, accent, dark)
+        elif any(word in text for word in ["libro", "apuntes", "separatas"]):
+            self.draw_books(draw, center_x, center_y, accent, dark)
+        elif "calculadora" in text:
+            self.draw_calculator(draw, center_x, center_y, accent, dark)
+        elif "audifonos" in text:
+            self.draw_headphones(draw, center_x, center_y, accent, dark)
+        elif "snack" in text:
+            self.draw_snack(draw, center_x, center_y, accent, dark, beige, muted)
+        else:
+            draw.ellipse((center_x - 105, center_y - 105, center_x + 105, center_y + 105), fill=accent)
+            draw.text((center_x - 52, center_y - 38), self.initials(title), fill="#ffffff", font=ImageFont.load_default())
+
+    def draw_board(self, draw, x, y, accent, dark):
+        draw.rounded_rectangle((x - 190, y - 115, x + 190, y + 90), radius=18, fill=dark)
+        draw.rectangle((x - 160, y - 85, x + 160, y + 45), fill="#ffffff")
+        draw.line((x - 135, y - 45, x - 45, y - 45), fill=accent, width=8)
+        draw.line((x - 135, y - 5, x + 80, y - 5), fill=accent, width=8)
+        draw.line((x - 80, y + 38, x + 130, y + 38), fill=accent, width=8)
+        draw.rectangle((x - 30, y + 90, x + 30, y + 130), fill=dark)
+        draw.rounded_rectangle((x - 110, y + 130, x + 110, y + 150), radius=10, fill=dark)
+
+    def draw_palette(self, draw, x, y, accent, dark):
+        draw.ellipse((x - 150, y - 125, x + 150, y + 125), fill=accent)
+        draw.ellipse((x + 35, y - 15, x + 95, y + 45), fill="#ffffff")
+        for dx, dy, color in [(-70, -55, dark), (-20, -80, "#ffffff"), (-85, 25, "#eadfce"), (-20, 45, dark)]:
+            draw.ellipse((x + dx - 20, y + dy - 20, x + dx + 20, y + dy + 20), fill=color)
+        draw.rounded_rectangle((x + 105, y + 35, x + 180, y + 55), radius=10, fill=dark)
+
+    def draw_laptop(self, draw, x, y, accent, dark):
+        draw.rounded_rectangle((x - 170, y - 105, x + 170, y + 90), radius=20, fill=dark)
+        draw.rectangle((x - 140, y - 75, x + 140, y + 60), fill="#ffffff")
+        draw.line((x - 95, y - 30, x + 65, y - 30), fill=accent, width=8)
+        draw.line((x - 95, y + 10, x + 110, y + 10), fill=accent, width=8)
+        draw.rounded_rectangle((x - 215, y + 95, x + 215, y + 135), radius=14, fill=accent)
+        draw.arc((x + 95, y - 115, x + 190, y - 20), 210, 35, fill=accent, width=12)
+
+    def draw_document(self, draw, x, y, accent, dark):
+        draw.rounded_rectangle((x - 115, y - 145, x + 115, y + 145), radius=18, fill="#ffffff", outline=dark, width=8)
+        draw.rectangle((x - 65, y - 100, x + 65, y - 50), fill=accent)
+        draw.line((x - 70, y - 5, x + 70, y - 5), fill=dark, width=8)
+        draw.line((x - 70, y + 35, x + 70, y + 35), fill=dark, width=8)
+        draw.line((x - 70, y + 75, x + 35, y + 75), fill=dark, width=8)
+
+    def draw_books(self, draw, x, y, accent, dark):
+        draw.rounded_rectangle((x - 155, y - 95, x - 25, y + 125), radius=14, fill=accent)
+        draw.rounded_rectangle((x - 15, y - 115, x + 125, y + 105), radius=14, fill=dark)
+        draw.rounded_rectangle((x + 65, y - 75, x + 185, y + 135), radius=14, fill="#ffffff", outline=dark, width=6)
+        draw.line((x - 120, y - 40, x - 55, y - 40), fill="#ffffff", width=7)
+        draw.line((x + 5, y - 55, x + 90, y - 55), fill="#ffffff", width=7)
+        draw.line((x + 95, y - 15, x + 155, y - 15), fill=accent, width=7)
+
+    def draw_calculator(self, draw, x, y, accent, dark):
+        draw.rounded_rectangle((x - 115, y - 145, x + 115, y + 145), radius=22, fill=dark)
+        draw.rounded_rectangle((x - 80, y - 105, x + 80, y - 55), radius=10, fill="#ffffff")
+        for row in range(3):
+            for col in range(3):
+                x0 = x - 75 + col * 55
+                y0 = y - 20 + row * 48
+                draw.rounded_rectangle((x0, y0, x0 + 34, y0 + 30), radius=7, fill=accent if row == 2 else "#ffffff")
+
+    def draw_headphones(self, draw, x, y, accent, dark):
+        draw.arc((x - 145, y - 145, x + 145, y + 145), 200, 340, fill=dark, width=24)
+        draw.rounded_rectangle((x - 155, y - 5, x - 95, y + 105), radius=18, fill=accent)
+        draw.rounded_rectangle((x + 95, y - 5, x + 155, y + 105), radius=18, fill=accent)
+        draw.line((x - 55, y + 115, x + 55, y + 115), fill=dark, width=12)
+
+    def draw_snack(self, draw, x, y, accent, dark, beige, muted):
+        draw.rounded_rectangle((x - 120, y - 130, x + 120, y + 130), radius=28, fill=accent)
+        draw.polygon([(x - 120, y - 130), (x + 120, y - 130), (x + 85, y - 70), (x - 85, y - 70)], fill=dark)
+        draw.ellipse((x - 55, y - 30, x + 55, y + 80), fill=beige)
+        draw.line((x - 55, y + 100, x + 55, y + 100), fill=muted, width=12)

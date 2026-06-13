@@ -45,8 +45,71 @@
                 <p class="mt-2 text-sm text-[#eadfd4]">publicaciones iniciales disponibles</p>
             </div>
             <div>
-                <p class="text-4xl font-black">1 → N</p>
+                <p class="text-4xl font-black">1 a N</p>
                 <p class="mt-2 text-sm text-[#eadfd4]">empieza en una universidad y escala a otras</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+        <div class="overflow-hidden rounded-lg bg-white shadow-2xl ring-1 ring-black/10">
+            <div class="relative min-h-[360px]">
+                <article class="uniconnet-slide absolute inset-0 grid gap-8 p-8 transition duration-500 lg:grid-cols-[0.95fr_1.05fr] lg:p-12" data-slide="0">
+                    <div>
+                        <p class="text-sm font-black uppercase tracking-wide text-[#6c523f]">El desafio</p>
+                        <h2 class="mt-3 font-serif text-4xl font-black sm:text-5xl">Reducir la brecha de acceso a recursos.</h2>
+                    </div>
+                    <div class="text-lg leading-8 text-[#4d3d31]">
+                        <p>Muchos alumnos nuevos necesitan apoyo academico, materiales accesibles y redes de confianza para resolver problemas cotidianos dentro de la universidad.</p>
+                        <ul class="mt-6 space-y-2 font-semibold">
+                            <li>Apoyo para primeros ciclos.</li>
+                            <li>Materiales reutilizables y economicos.</li>
+                            <li>Servicios rapidos ofrecidos por estudiantes.</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <article class="uniconnet-slide absolute inset-0 hidden grid gap-8 p-8 transition duration-500 lg:grid-cols-[0.95fr_1.05fr] lg:p-12" data-slide="1">
+                    <div>
+                        <p class="text-sm font-black uppercase tracking-wide text-[#6c523f]">La solucion</p>
+                        <h2 class="mt-3 font-serif text-4xl font-black sm:text-5xl">Una plataforma organizada y segura.</h2>
+                    </div>
+                    <div class="text-lg leading-8 text-[#4d3d31]">
+                        <p>UNICONNET permite publicar servicios y productos, buscar por categorias, coordinar por chat o WhatsApp y construir reputacion dentro de la comunidad.</p>
+                        <ul class="mt-6 space-y-2 font-semibold">
+                            <li>Publicaciones con imagen, precio y descripcion.</li>
+                            <li>Filtros por producto, servicio o categoria.</li>
+                            <li>Perfiles, reseñas y reportes para confianza.</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <article class="uniconnet-slide absolute inset-0 hidden grid gap-8 p-8 transition duration-500 lg:grid-cols-[0.95fr_1.05fr] lg:p-12" data-slide="2">
+                    <div>
+                        <p class="text-sm font-black uppercase tracking-wide text-[#6c523f]">Crecimiento</p>
+                        <h2 class="mt-3 font-serif text-4xl font-black sm:text-5xl">Empieza en una universidad y escala.</h2>
+                    </div>
+                    <div class="text-lg leading-8 text-[#4d3d31]">
+                        <p>El modelo valida primero la necesidad en una comunidad universitaria y luego se expande por carreras, facultades, sedes y otras instituciones.</p>
+                        <ul class="mt-6 space-y-2 font-semibold">
+                            <li>Comision por venta o servicio.</li>
+                            <li>Publicaciones destacadas.</li>
+                            <li>Membresias premium para usuarios frecuentes.</li>
+                        </ul>
+                    </div>
+                </article>
+            </div>
+
+            <div class="flex items-center justify-between border-t border-black/10 bg-[#f7f1e8] px-6 py-4">
+                <div class="flex gap-2">
+                    <button type="button" class="slide-dot h-3 w-8 rounded-full bg-black" data-target-slide="0" aria-label="Slide 1"></button>
+                    <button type="button" class="slide-dot h-3 w-3 rounded-full bg-black/30" data-target-slide="1" aria-label="Slide 2"></button>
+                    <button type="button" class="slide-dot h-3 w-3 rounded-full bg-black/30" data-target-slide="2" aria-label="Slide 3"></button>
+                </div>
+                <div class="flex gap-2">
+                    <button type="button" id="slide-prev" class="rounded-full border border-black/10 bg-white px-4 py-2 text-sm font-black">Anterior</button>
+                    <button type="button" id="slide-next" class="rounded-full bg-black px-4 py-2 text-sm font-black text-white">Siguiente</button>
+                </div>
             </div>
         </div>
     </section>
@@ -217,4 +280,36 @@
         </div>
     </section>
 </main>
+
+<script>
+    (function () {
+        var slides = Array.prototype.slice.call(document.querySelectorAll('.uniconnet-slide'));
+        var dots = Array.prototype.slice.call(document.querySelectorAll('.slide-dot'));
+        var prev = document.getElementById('slide-prev');
+        var next = document.getElementById('slide-next');
+        var current = 0;
+
+        function showSlide(index) {
+            current = (index + slides.length) % slides.length;
+            slides.forEach(function (slide, i) {
+                slide.classList.toggle('hidden', i !== current);
+            });
+            dots.forEach(function (dot, i) {
+                dot.classList.toggle('w-8', i === current);
+                dot.classList.toggle('w-3', i !== current);
+                dot.classList.toggle('bg-black', i === current);
+                dot.classList.toggle('bg-black/30', i !== current);
+            });
+        }
+
+        dots.forEach(function (dot) {
+            dot.addEventListener('click', function () {
+                showSlide(Number(dot.getAttribute('data-target-slide')));
+            });
+        });
+        if (prev) prev.addEventListener('click', function () { showSlide(current - 1); });
+        if (next) next.addEventListener('click', function () { showSlide(current + 1); });
+        if (slides.length > 1) setInterval(function () { showSlide(current + 1); }, 6500);
+    })();
+</script>
 {% endblock content %}

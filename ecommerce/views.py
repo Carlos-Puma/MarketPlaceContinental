@@ -14,6 +14,75 @@ from ecommerce.models import Category, Product
 from ecommerce.serializers import CategorySerializer, ProductSerializer
 
 
+UNICONNET_PAGES = {
+    "servicios": {
+        "eyebrow": "Servicios",
+        "title": "Apoyo academico y servicios especializados",
+        "intro": "Estudiantes de ciclos avanzados ofrecen conocimientos, habilidades y soluciones rapidas a otros alumnos de la comunidad universitaria.",
+        "items": [
+            ("Tutorias de cursos", "Refuerzo para materias complejas, primeros ciclos y preparacion para evaluaciones."),
+            ("Ingles, matematicas y programacion", "Clases personalizadas para tareas, proyectos y aprendizaje practico."),
+            ("Diseño grafico y edicion", "Piezas visuales, videos, fotografia, logotipos y contenido para trabajos o emprendimientos."),
+            ("Reparacion de laptops", "Diagnostico, mantenimiento, instalacion de programas y soporte tecnico accesible."),
+            ("CV y emprendimiento", "Asesoria para perfil profesional, pitch, validacion de ideas y primeros pasos comerciales."),
+            ("Chat y reputacion", "Comunicacion directa, calificaciones y reseñas para operar con confianza."),
+        ],
+    },
+    "productos": {
+        "eyebrow": "Productos",
+        "title": "Recursos universitarios reutilizados",
+        "intro": "UNICONNET facilita la compra, venta o alquiler de materiales academicos y herramientas de estudio a precios accesibles.",
+        "items": [
+            ("Libros usados", "Textos universitarios, separatas y resumenes de cursos."),
+            ("Calculadoras y herramientas", "Calculadoras cientificas, kits, reglas, materiales y equipos academicos."),
+            ("Laptops y tecnologia", "Laptops, cargadores, audifonos, memorias USB y accesorios para estudio."),
+            ("Materiales academicos", "Apuntes digitales, impresiones, anillados y recursos organizados."),
+            ("Comida y accesorios", "Soluciones practicas para el dia a dia universitario."),
+            ("Publicaciones destacadas", "Mayor visibilidad para productos o servicios con alta demanda."),
+        ],
+    },
+    "beneficios": {
+        "eyebrow": "Beneficios",
+        "title": "Una comunidad que se ayuda y genera valor",
+        "intro": "El objetivo es reducir barreras de acceso, crear oportunidades economicas y fortalecer la confianza entre estudiantes.",
+        "items": [
+            ("Alumnos nuevos", "Reciben apoyo, materiales accesibles y orientacion de estudiantes con experiencia."),
+            ("Alumnos avanzados", "Generan ingresos ofreciendo servicios, tutorias o recursos que ya no utilizan."),
+            ("Comunidad universitaria", "Impulsa colaboracion, intercambio responsable y cultura de apoyo."),
+            ("Menos desperdicio", "Promueve la reutilizacion de libros, apuntes, equipos y materiales."),
+            ("Mas confianza", "Perfiles, reseñas, reportes y comunicacion directa reducen riesgos."),
+            ("Mejor acceso", "Centraliza recursos y oportunidades dentro de una plataforma organizada."),
+        ],
+    },
+    "modelo": {
+        "eyebrow": "Modelo de ingreso",
+        "title": "Sostenible desde la participacion estudiantil",
+        "intro": "La plataforma puede sostenerse con ingresos proporcionales al valor que genera para vendedores, prestadores y compradores.",
+        "items": [
+            ("Comision por venta", "Una comision pequena por transaccion o servicio concretado."),
+            ("Publicaciones destacadas", "Anuncios con mayor visibilidad dentro de categorias y busquedas."),
+            ("Membresias premium", "Beneficios para usuarios frecuentes o vendedores con mayor volumen."),
+            ("Validacion inicial", "Empieza con una comunidad universitaria antes de escalar."),
+            ("Alianzas", "Convenios con centros de estudiantes, facultades o emprendimientos."),
+            ("Crecimiento gradual", "Escala por carrera, facultad, sede y universidad."),
+        ],
+    },
+    "crecimiento": {
+        "eyebrow": "Escala",
+        "title": "De una universidad a muchas",
+        "intro": "UNICONNET empieza resolviendo necesidades concretas en una universidad y luego replica el modelo en nuevas sedes e instituciones.",
+        "items": [
+            ("Fase 1: comunidad local", "Validar necesidades, categorias y comportamiento de usuarios."),
+            ("Fase 2: confianza", "Mejorar reputacion, moderacion, reportes y verificacion."),
+            ("Fase 3: expansion", "Abrir nuevas carreras, facultades y sedes."),
+            ("Fase 4: red universitaria", "Conectar comunidades de distintas universidades."),
+            ("Marketing estudiantil", "Difusion en redes sociales, grupos universitarios y referidos."),
+            ("Producto escalable", "Una estructura digital replicable y adaptable."),
+        ],
+    },
+}
+
+
 def home(request):
     query = request.GET.get("q", "").strip()
     selected_category = request.GET.get("category", "").strip()
@@ -39,6 +108,11 @@ def home(request):
             "selected_category": selected_category,
         },
     )
+
+
+def uniconnet_page(request, page_slug):
+    page = UNICONNET_PAGES[page_slug]
+    return render(request, "ecommerce/info_page.html", {"page": page, "page_slug": page_slug})
 
 
 class APIRootView(APIView):

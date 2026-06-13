@@ -4,11 +4,16 @@ from django.contrib import admin
 from django.urls import include, path
 from drf_yasg2 import openapi
 from drf_yasg2.views import get_schema_view
-from ecommerce.views import home
+from ecommerce.views import home, uniconnet_page
 from rest_framework import permissions
 
 urlpatterns = [
     path("", home, name="home"),
+    path("servicios/", uniconnet_page, {"page_slug": "servicios"}, name="services"),
+    path("productos/", uniconnet_page, {"page_slug": "productos"}, name="products-page"),
+    path("beneficios/", uniconnet_page, {"page_slug": "beneficios"}, name="benefits"),
+    path("modelo/", uniconnet_page, {"page_slug": "modelo"}, name="model-page"),
+    path("crecimiento/", uniconnet_page, {"page_slug": "crecimiento"}, name="growth"),
     path("api/v1/", include("ecommerce.urls")),
     path("admin/", admin.site.urls),
     path("api/v1/", include("users.urls")),

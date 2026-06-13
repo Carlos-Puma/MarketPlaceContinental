@@ -1,0 +1,43 @@
+{% extends '../base.html' %}
+
+{% block title %}| {{ page.eyebrow }}{% endblock title %}
+
+{% block content %}
+<main class="bg-[#eadfce] text-black">
+    <section class="border-b border-black/10">
+        <div class="mx-auto grid max-w-7xl gap-10 px-4 py-16 sm:px-6 lg:grid-cols-[0.9fr_1.1fr] lg:px-8 lg:py-20">
+            <div>
+                <p class="mb-5 w-fit rounded-full border border-black/10 bg-white/60 px-4 py-2 text-xs font-black uppercase tracking-wide">
+                    {{ page.eyebrow }}
+                </p>
+                <h1 class="font-serif text-5xl font-black leading-none sm:text-6xl">{{ page.title }}</h1>
+            </div>
+            <div class="rounded-lg bg-white/75 p-8 text-xl leading-9 text-[#3b2d23] shadow-sm ring-1 ring-black/10">
+                {{ page.intro }}
+            </div>
+        </div>
+    </section>
+
+    <section class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+        <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {% for title, description in page.items %}
+            <article class="rounded-lg bg-white p-7 shadow-sm ring-1 ring-black/10 transition hover:-translate-y-1 hover:shadow-xl">
+                <p class="text-sm font-black uppercase tracking-wide text-[#7a604c]">UNICONNET</p>
+                <h2 class="mt-3 font-serif text-2xl font-black">{{ title }}</h2>
+                <p class="mt-4 leading-7 text-[#5b4a3d]">{{ description }}</p>
+            </article>
+            {% endfor %}
+        </div>
+
+        <div class="mt-12 rounded-lg bg-black p-8 text-white lg:flex lg:items-center lg:justify-between">
+            <div>
+                <h2 class="font-serif text-3xl font-black">¿Listo para conectar tu comunidad?</h2>
+                <p class="mt-3 max-w-2xl text-[#eadfd4]">Vuelve al inicio para explorar publicaciones, servicios y recursos disponibles.</p>
+            </div>
+            <a href="{% url 'home' %}#publicaciones" class="mt-6 inline-flex rounded-full bg-[#eadfce] px-6 py-3 text-sm font-black text-black hover:bg-white lg:mt-0">
+                Ver publicaciones
+            </a>
+        </div>
+    </section>
+</main>
+{% endblock content %}
