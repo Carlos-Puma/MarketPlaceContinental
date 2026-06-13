@@ -31,4 +31,3 @@ services:
 databases:
   - name: marketplace-continental-db
     plan: free
-    postgresMajorVersion: "15"
