@@ -40,11 +40,18 @@ ALLOWED_HOSTS = [
     "test-marketplace-django.herokuapp.com",
 ] + env.list("ALLOWED_HOSTS", default=[])
 
+RENDER_EXTERNAL_HOSTNAME = env("RENDER_EXTERNAL_HOSTNAME", default=None)
+if RENDER_EXTERNAL_HOSTNAME:
+    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
+
 
 CSRF_TRUSTED_ORIGINS = [
     "https://test-marketplace-django.herokuapp.com",
     "https://django-ecommerce-v1.herokuapp.com",
 ] + env.list("CSRF_TRUSTED_ORIGINS", default=[])
+
+if RENDER_EXTERNAL_HOSTNAME:
+    CSRF_TRUSTED_ORIGINS.append(f"https://{RENDER_EXTERNAL_HOSTNAME}")
 
 
 # Application definitionds
