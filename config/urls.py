@@ -16,7 +16,8 @@ urlpatterns = [
     path("crecimiento/", uniconnet_page, {"page_slug": "crecimiento"}, name="growth"),
     path("api/v1/", include("ecommerce.urls")),
     path("admin/", admin.site.urls),
-    path("api/v1/", include("users.urls")),
+    path("", include("users.web_urls")),
+    path("api/v1/", include("users.api_urls")),
     path("cart/", include("shopping_cart.urls")),
     path("payment/", include("payment.urls")),
 ]

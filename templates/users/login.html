@@ -17,21 +17,23 @@
 				{% csrf_token %}
 				<div class="flex flex-col">
 					<label for="input_email" class="mb-2 text-sm font-bold text-[#5b4a3d]">Email</label>
-					<input type="text" name="email" class="min-h-12 rounded-md border border-black/10 bg-[#fbf7f2] px-4 outline-none focus:border-black">
+					<input id="input_email" type="email" name="email" autocomplete="email" required class="min-h-12 rounded-md border border-black/10 bg-[#fbf7f2] px-4 outline-none focus:border-black">
 				</div>
 
 				<div class="flex flex-col">
 					<label for="password" class="mb-2 text-sm font-bold text-[#5b4a3d]">Password</label>
-					<input type="password" name="password" class="min-h-12 rounded-md border border-black/10 bg-[#fbf7f2] px-4 outline-none focus:border-black">
+					<input id="password" type="password" name="password" autocomplete="current-password" required class="min-h-12 rounded-md border border-black/10 bg-[#fbf7f2] px-4 outline-none focus:border-black">
 				</div>
 
-				{% if user_registration.errors %}
+				{% if messages %}
 				<div class="rounded-md bg-red-50 p-3 text-center text-sm font-semibold text-red-700">
-					{{ user_registration.errors }}
+					{% for message in messages %}
+					<p>{{ message }}</p>
+					{% endfor %}
 				</div>
 				{% endif %}
 
-				<input type="submit" class="min-h-12 w-full rounded-full bg-black px-6 font-bold text-white transition hover:bg-[#2b211b]" value="Login">
+				<input type="submit" class="min-h-12 w-full rounded-full bg-black px-6 font-bold text-white transition hover:bg-[#2b211b]" value="Iniciar sesion">
 			</form>
 
 			<p class="mt-6 text-center text-sm text-[#5b4a3d]">
